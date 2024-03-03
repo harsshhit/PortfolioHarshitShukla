@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App.css or your component's CSS file */
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+nav {
+  background: rgba(0, 0, 0, 0.3);
+  width: max-content;
+  display: block;
+  padding: 0.7rem 1.7rem;
+  z-index: 2;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2rem;
+  display: flex;
+  gap: 0.8rem;
+  border-radius: 3rem;
+  backdrop-filter: blur(15px);
+  justify-content: center;
+}
+
+nav a {
+  background: transparent;
+  padding: 0.9rem;
+  border-radius: 50%;
+  display: flex;
+  font-size: 1.1rem;
+}
+
+nav a:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+nav a.active {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.loader {
+  width: 200px;
+  /* Adjust the width as needed */
+  height: 4px;
+  background: linear-gradient(90deg, #2ecc71, #3498db, #8e44ad);
+  margin: 0 auto;
+  position: relative;
+  animation: loader-animation 1.5s ease-in-out infinite;
+}
+
+@keyframes loader-animation {
+  0% {
+    transform: scaleX(0);
+  }
+
+  50% {
+    transform: scaleX(1.2);
+  }
+
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+
+
+.loader-gray-black {
+  width: 200px; /* Adjust the width as needed */
+  height: 4px;
+  background: linear-gradient(90deg, #555555, #000000); /* Gray to Black gradient */
+  margin: 0 auto;
+  position: relative;
+  animation: loader-animation 1.5s ease-in-out infinite;
+}
+
