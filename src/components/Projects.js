@@ -1,5 +1,5 @@
 import React from "react";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import the carousel styles
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 import st0 from "../assets/st0.png";
@@ -11,9 +11,6 @@ import st4 from "../assets/st4.png";
 import ct1 from "../assets/ct1.png";
 import ct2 from "../assets/ct2.png";
 import ct3 from "../assets/ct3.png";
-
-import tk1 from "../assets/tk1.png";
-import tk2 from "../assets/tk2.png";
 
 const data = [
   {
@@ -34,22 +31,14 @@ const data = [
     github: "https://github.com/harsshht/chatHere",
     demo: "https://chat-here-eta.vercel.app/",
   },
-  {
-    id: 3,
-    images: [tk1, tk2],
-    title: "Taskhere",
-    description:
-      "The ultimate React.js task app for effortless task management, organization, and enhanced productivity.",
-    github: "https://github.com/harsshht/TaskHere",
-    demo: "https://task-here.vercel.app/",
-  },
 ];
 
 function Projects() {
   return (
     <section
       id="projects"
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900 to-blue-900 text-white py-16"
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
+ text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">

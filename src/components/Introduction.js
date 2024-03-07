@@ -8,14 +8,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "animate.css"; // Import animate.css
 
-
-
-
 function Introduction() {
   return (
     <section
       id="introduction"
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900 text-white pt-24"
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
+ text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto text-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -62,4 +60,3 @@ function Introduction() {
 }
 
 export default Introduction;
-

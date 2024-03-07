@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-import "animate.css"; // Import animate.css
+import "animate.css";
 import pdfres from "../assets/ResumeHarshitShukla7.pdf";
 
 function Resume() {
@@ -16,25 +15,23 @@ function Resume() {
   return (
     <section
       id="resume"
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900
-    text-white min-h-screen py-16"
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
+ text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto">
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Resume
         </h1>
-        {/* <div class="loader-gray-black"></div>{" "} */}
         <div className="text-center mt-4">
           <a
             href={resumeLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-900 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-block animate__animated animate__fadeIn animate__delay-300 transition duration-300 border-2 border-gray-700  hover:bg-blue-950  hover:border-white"
+            className="bg-gray-900 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-block animate__animated animate__fadeIn animate__delay-300 transition duration-300 border-2 border-gray-700"
           >
             Download My Resume
           </a>
         </div>
-        {/* Embed PDF */}
         {showPdf && (
           <div className="mt-8 flex justify-center items-center">
             <iframe
@@ -45,11 +42,10 @@ function Resume() {
             ></iframe>
           </div>
         )}
-        {/* Button to toggle PDF */}
         <div className="text-center mt-4">
           <button
             onClick={togglePdf}
-            className="bg-gray-900 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-block animate__animated animate__fadeIn animate__delay-300 transition duration-300 border-2 border-gray-700  hover:bg-blue-950  hover:border-white"
+            className="bg-gray-900 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-block animate__animated animate__fadeIn animate__delay-300 transition duration-300 border-2 border-gray-700"
           >
             {showPdf ? "Hide PDF" : "Show PDF"}
           </button>

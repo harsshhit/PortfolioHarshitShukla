@@ -5,16 +5,14 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900
-    text-white py-16 px-8"
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
+ text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto text-center">
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Contact
         </h1>
-        {/* <div class="loader-gray-black"></div>{" "} */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-          {/* Email Box */}
           <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
             <FaEnvelope className="text-5xl mb-4" />
             <h2 className="text-xl font-semibold mb-2">Email:</h2>
@@ -26,7 +24,6 @@ function Contact() {
             </a>
           </div>
 
-          {/* LinkedIn Box */}
           <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
             <FaLinkedin className="text-5xl mb-4" />
             <h2 className="text-xl font-semibold mb-2">LinkedIn:</h2>
@@ -40,7 +37,6 @@ function Contact() {
             </a>
           </div>
 
-          {/* WhatsApp Box */}
           <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
             <FaWhatsapp className="text-5xl mb-4" />
             <h2 className="text-xl font-semibold mb-2">WhatsApp:</h2>

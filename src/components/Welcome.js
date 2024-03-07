@@ -6,7 +6,7 @@ function Welcome() {
   return (
     <div
       id="Welcome"
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
  text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto flex flex-col items-center md:flex-row px-6">
@@ -25,17 +25,12 @@ function Welcome() {
             Harshit Shukla
           </h1>
           <h1 className="text-2xl pt-2 text-gray-400 pb-4 md:text-3xl font-extrabold mb-4 md:mb-0 md:ml-3 transform scale-105 animate__animated animate__fadeIn animate__delay-500">
-            I create dynamic web applications using the MERN stack.
+            I build things for the web.
           </h1>
           <p className="text-lg md:text-xl mb-4 md:mb-8 text-gray-300 animate__animated animate__fadeIn animate__delay-700">
-            <a className="text-white"> "</a>
             I'm a full-stack web developer specializing in the MERN stack.I'm
             passionate about creating modern and interactive web applications.
-            <a className="text-white"> "</a>
           </p>
-          {/* <div className="loader">
-            <div className="loader-line"></div>
-          </div> */}
         </div>
       </div>
     </div>

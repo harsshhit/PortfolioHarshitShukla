@@ -4,14 +4,13 @@ function Skills() {
   return (
     <section
       id="skills"
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900
-      text-white min-h-screen pt-24"
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
+ text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto">
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Skills
         </h1>
-        {/* <div class="loader-gray-black"></div> */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-gradient-to-r from-black via-gray-800 to-blue-900 border-2 border-gray-700  hover:bg-blue-950  hover:border-white mx-8 my-2 p-6 rounded-xl shadow-lg text-white font-semibold py-4 px-6 transform hover:scale-105 hover:shadow-xl transition duration-300 animate__animated animate__fadeIn animate__delay-700">

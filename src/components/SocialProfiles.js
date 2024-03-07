@@ -1,18 +1,17 @@
 import React from "react";
-import "animate.css"; // Import animate.css
+import "animate.css";
 import { FaGithub, FaLinkedin, FaTwitter, FaCode, FaDev } from "react-icons/fa";
 
 function SocialProfiles() {
   return (
     <section
-      className="bg-gradient-to-r from-black via-gray-800 to-gray-900
-    text-white min-h-screen py-16"
+      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
+ text-white py-12 md:py-40 pt-40"
     >
       <div className="container mx-auto text-center">
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Social Profiles
         </h1>
-        {/* <div class="loader-gray-black mb-2"></div> */}
         <div className="flex flex-wrap justify-center items-center gap-4 mt-2">
           <a
             href="https://github.com/harsshhit"
@@ -42,7 +41,7 @@ function SocialProfiles() {
             LinkedIn
           </a>
           <a
-            href="https://twitter.com/harryomm?s=09"
+            href="https://twitter.com/theharryom?s=09"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-400 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center mb-4 sm:mb-0 sm:mr-4 transition duration-300 border-2 border-blue-300  hover:bg-blue-300  hover:border-white"
