@@ -12,7 +12,7 @@ function Contact() {
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Contact
         </h1>
-        <div class="loader-gray-black"></div>{" "}
+        {/* <div class="loader-gray-black"></div>{" "} */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
           {/* Email Box */}
           <div className="bg-gray-900 p-6 rounded-lg shadow-lg">

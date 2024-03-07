@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "animate.css"; // Import animate.css
 import pdfres from "../assets/ResumeHarshitShukla7.pdf";
 
@@ -23,7 +23,7 @@ function Resume() {
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Resume
         </h1>
-        <div class="loader-gray-black"></div>{" "}
+        {/* <div class="loader-gray-black"></div>{" "} */}
         <div className="text-center mt-4">
           <a
             href={resumeLink}

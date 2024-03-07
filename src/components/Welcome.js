@@ -1,5 +1,5 @@
 import React from "react";
-import profileImage from "../assets/profile.jpg";
+import profileImage from "../assets/profile.png";
 import "../index.css";
 
 function Welcome() {
@@ -33,9 +33,9 @@ function Welcome() {
             passionate about creating modern and interactive web applications.
             <a className="text-white"> "</a>
           </p>
-          <div className="loader">
+          {/* <div className="loader">
             <div className="loader-line"></div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

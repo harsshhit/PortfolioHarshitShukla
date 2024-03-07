@@ -55,7 +55,7 @@ function Projects() {
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Projects
         </h1>
-        <div class="loader-gray-black"></div>
+        {/* <div class="loader-gray-black"></div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {data.map(({ id, images, title, description, github, demo }) => {
             return (
@@ -77,7 +77,7 @@ function Projects() {
                     <div key={index}>
                       <img
                         src={image}
-                        alt={`${title} - Image ${index + 1}`}
+                        alt={title}
                         className="object-cover h-60 w-full"
                       />
                     </div>

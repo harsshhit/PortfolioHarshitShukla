@@ -12,10 +12,10 @@ function SocialProfiles() {
         <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
           Social Profiles
         </h1>
-        <div class="loader-gray-black mb-2"></div>
+        {/* <div class="loader-gray-black mb-2"></div> */}
         <div className="flex flex-wrap justify-center items-center gap-4 mt-2">
           <a
-            href="https://github.com/harsshht"
+            href="https://github.com/harsshhit"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-gray-900 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center mb-4 sm:mb-0 sm:mr-4 transition duration-300 border-2 border-gray-700  hover:bg-gray-700  hover:border-white"
