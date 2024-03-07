@@ -1,7 +1,6 @@
 import React from "react";
-import profileImage from "../assets/profile.jpg"; 
+import profileImage from "../assets/profile.jpg";
 import "../index.css";
-
 
 function Welcome() {
   return (
@@ -24,6 +23,9 @@ function Welcome() {
         <div className="flex-1 text-center md:text-left px-6 md:ml-4">
           <h1 className="text-3xl pt-8 pb-4 md:text-5xl font-extrabold mb-4 md:mb-0 md:ml-3 transform scale-105 animate__animated animate__fadeIn animate__delay-500">
             Harshit Shukla
+          </h1>
+          <h1 className="text-2xl pt-2 text-gray-400 pb-4 md:text-3xl font-extrabold mb-4 md:mb-0 md:ml-3 transform scale-105 animate__animated animate__fadeIn animate__delay-500">
+            I create dynamic web applications using the MERN stack.
           </h1>
           <p className="text-lg md:text-xl mb-4 md:mb-8 text-gray-300 animate__animated animate__fadeIn animate__delay-700">
             <a className="text-white"> "</a>
