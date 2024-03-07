@@ -1,5 +1,5 @@
 import React from "react";
-import profileImage from "../assets/profile.jpg"; // Import your profile image
+import profileImage from "../assets/profile.jpg"; 
 import "../index.css";
 
 
@@ -27,7 +27,7 @@ function Welcome() {
           </h1>
           <p className="text-lg md:text-xl mb-4 md:mb-8 text-gray-300 animate__animated animate__fadeIn animate__delay-700">
             <a className="text-white"> "</a>
-            I'm a full-stack web developer specializing in the MERN stack. I'm
+            I'm a full-stack web developer specializing in the MERN stack.I'm
             passionate about creating modern and interactive web applications.
             <a className="text-white"> "</a>
           </p>
