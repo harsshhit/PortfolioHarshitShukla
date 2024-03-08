@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* App.css or your component's CSS file */
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
 nav {
   background: rgba(0, 0, 0, 0.3);
@@ -62,15 +62,3 @@ nav a.active {
     transform: scaleX(0);
   }
 }
-
-
-
-.loader-gray-black {
-  width: 200px; /* Adjust the width as needed */
-  height: 4px;
-  background: linear-gradient(90deg, #555555, #000000); /* Gray to Black gradient */
-  margin: 0 auto;
-  position: relative;
-  animation: loader-animation 1.5s ease-in-out infinite;
-}
-

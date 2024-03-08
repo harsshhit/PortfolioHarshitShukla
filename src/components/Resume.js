@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "animate.css";
-import pdfres from "../assets/ResumeHarshitShukla7.pdf";
+import pdfres from "../assets/Harshit_Shukla_CV_A2.pdf";
 
 function Resume() {
   const [showPdf, setShowPdf] = useState(false);
