@@ -19,8 +19,8 @@ const data = [
     title: "Streamhere",
     description:
       "A Fullstack Video streaming webapp with React, NextJS, TailwindCSS & Prisma",
-    github: "https://github.com/harsshht/StreamHere",
-    demo: "https://stream-here.vercel.app/",
+    github: "https://github.com/harsshhit/Streamhere",
+    demo: "https://streamhere.vercel.app/auth",
   },
   {
     id: 2,
@@ -28,8 +28,8 @@ const data = [
     title: "Chathere",
     description:
       " A real-time chat app with an intuitive interface, powered by React.js, Firebase, and Node.js.",
-    github: "https://github.com/harsshht/chatHere",
-    demo: "https://chat-here-eta.vercel.app/",
+    github: "https://github.com/harsshhit/Chathere",
+    demo: "https://chathere-khaki.vercel.app/",
   },
 ];
 
