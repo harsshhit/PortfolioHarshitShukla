@@ -6,7 +6,7 @@ function Resume() {
   const [showPdf, setShowPdf] = useState(false);
 
   const resumeLink =
-    "https://drive.google.com/file/d/1-19VMBXq7pZHDl3G04pPC63E3FkE-zjf/view?usp=drive_link";
+    "https://drive.google.com/file/d/1-23RvZ0r26HapucyNRCMgX1G8yu3BXwZ/view?usp=drive_link";
 
   const togglePdf = () => {
     setShowPdf(!showPdf);
