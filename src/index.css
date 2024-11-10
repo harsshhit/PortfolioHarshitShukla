@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* App.css or your component's CSS file */
-@import "~@fortawesome/fontawesome-free/css/all.css";
+/* @import "~@fortawesome/fontawesome-free/css/all.css"; */
 
 nav {
   background: rgba(0, 0, 0, 0.3);
