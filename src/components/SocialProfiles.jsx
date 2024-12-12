@@ -1,67 +1,149 @@
-import React from "react";
-import "animate.css";
+import { useState } from "react";
 import { FaGithub, FaLinkedin, FaTwitter, FaCode, FaDev } from "react-icons/fa";
+import profileImage from "../assets/resumelogo2.png";
+
+// JSON object containing the social links and details
+const socialLinks = [
+  {
+    id: "github",
+    url: "https://github.com/harsshhit",
+    icon: <FaGithub className="text-xl" />,
+    label: "GitHub",
+    bgColor: "bg-gray-900",
+    textColor: "text-white",
+    borderColor: "border-gray-700",
+    hoverBgColor: "hover:bg-gray-700",
+    hoverBorderColor: "hover:border-white",
+  },
+  {
+    id: "twitter",
+    url: "https://twitter.com/theharryom?s=09",
+    icon: <FaTwitter className="text-xl" />,
+    label: "Twitter",
+    bgColor: "bg-blue-400",
+    textColor: "text-white",
+    borderColor: "border-blue-300",
+    hoverBgColor: "hover:bg-blue-300",
+    hoverBorderColor: "hover:border-white",
+  },
+  {
+    id: "linkedin",
+    url: "https://www.linkedin.com/in/harshit-shukla-8b706417a",
+    icon: <FaLinkedin className="text-xl" />,
+    label: "LinkedIn",
+    bgColor: "bg-blue-700",
+    textColor: "text-white",
+    borderColor: "border-blue-500",
+    hoverBgColor: "hover:bg-blue-500",
+    hoverBorderColor: "hover:border-white",
+  },
+  {
+    id: "leetcode",
+    url: "https://leetcode.com/harshh8/",
+    icon: <FaCode className="text-xl" />,
+    label: "LeetCode",
+    bgColor: "bg-yellow-400",
+    textColor: "text-black",
+    borderColor: "border-yellow-300",
+    hoverBgColor: "hover:bg-yellow-300",
+    hoverBorderColor: "hover:border-white",
+  },
+  {
+    id: "devto",
+    url: "https://dev.to/your-devto-username",
+    icon: <FaDev className="text-xl" />,
+    label: "Dev.to",
+    bgColor: "bg-black",
+    textColor: "text-white",
+    borderColor: "border-gray-700",
+    hoverBgColor: "hover:bg-gray-700",
+    hoverBorderColor: "hover:border-white",
+  },
+];
 
 function SocialProfiles() {
-  return (
-    <section
-      className="bg-gradient-to-r from-blue-900 via-gray-800 to-gray-900
- text-white py-12 md:py-40 pt-40"
-    >
-      <div className="container mx-auto text-center">
-        <h1 className="text-4xl font-semibold text-center mb-8 text-gradient bg-clip-text bg-gradient-to-r from-purple-500 to-green-500 animate-pulse">
-          Social Profiles
-        </h1>
-        <div className="flex flex-wrap justify-center items-center gap-4 mt-2">
-          <a
-            href="https://github.com/harsshhit"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-gray-900 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center mb-4 sm:mb-0 sm:mr-4 transition duration-300 border-2 border-gray-700  hover:bg-gray-700  hover:border-white"
-          >
-            <FaGithub className="mr-2" />
-            GitHub
-          </a>
-          <a
-            href="https://leetcode.com/harshh8/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-yellow-400 text-black font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center mb-4 sm:mb-0 sm:mr-4 transition duration-300 border-2 border-yellow-300  hover:bg-yellow-300  hover:border-white"
-          >
-            <FaCode className="mr-2" />
-            LeetCode
-          </a>
-          <a
-            href="https://www.linkedin.com/in/harshit-shukla-8b706417a"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-700 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center mb-4 sm:mb-0 sm:mr-4 transition duration-300 border-2 border-blue-500  hover:bg-blue-500  hover:border-white"
-          >
-            <FaLinkedin className="mr-2" />
-            LinkedIn
-          </a>
-          <a
-            href="https://twitter.com/theharryom?s=09"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-400 text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center mb-4 sm:mb-0 sm:mr-4 transition duration-300 border-2 border-blue-300  hover:bg-blue-300  hover:border-white"
-          >
-            <FaTwitter className="mr-2" />
-            Twitter
-          </a>
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  return (
+    <div
+      id="Socials"
+      className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 flex flex-col items-end"
+      style={{ zIndex: 50 }}
+    >
+      {/* Enhanced Main Button with Profile Image */}
+      <button
+        onClick={toggleExpand}
+        className={`
+          bg-gradient-to-br from-blue-500 to-purple-600 
+          text-white h-14 w-14 rounded-full 
+          shadow-xl flex items-center justify-center 
+          transition-all duration-300 ease-in-out
+          hover:shadow-2xl hover:scale-110
+          active:scale-95
+          ${isExpanded ? "mb-4 rotate-45" : ""}
+          relative overflow-hidden
+          group
+        `}
+      >
+        {/* Gradient Border Effect */}
+        <div className="absolute inset-1 border-4 border-transparent bg-gradient-to-br from-blue-400 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+        {/* Profile Image with Hover Effect */}
+        <div className="absolute inset-1 rounded-full overflow-hidden">
+          <img
+            src={profileImage}
+            alt="Profile"
+            className={`
+              w-full h-full object-cover 
+              transition-transform duration-300
+              group-hover:scale-110 
+              group-hover:rotate-6
+            `}
+          />
+        </div>
+
+        {/* Overlay Effects */}
+        <div className="absolute inset-0 bg-blue-500 animate-ping opacity-25 rounded-full z-[-1]"></div>
+        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full z-10"></div>
+      </button>
+
+      {/* Social Links */}
+      <div
+        className={`
+          flex flex-col space-y-4 
+          transition-all duration-300 ease-in-out 
+          overflow-hidden
+          ${isExpanded ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"}
+        `}
+      >
+        {socialLinks.map((link) => (
           <a
-            href="https://dev.to/your-devto-username"
+            key={link.id}
+            href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-black text-white font-semibold py-2 px-4 rounded-full shadow-lg inline-flex items-center transition duration-300 border-2 border-gray-700  hover:bg-gray-700  hover:border-white"
+            className={`
+              ${link.bgColor} ${link.textColor} 
+              h-10 w-10 font-semibold p-2 
+              rounded-full shadow-md 
+              inline-flex items-center justify-center 
+              transition duration-300 border-2 
+              ${link.borderColor} 
+              ${link.hoverBgColor} 
+              ${link.hoverBorderColor}
+              transform hover:scale-110
+            `}
+            title={link.label}
           >
-            <FaDev className="mr-2" />
-            Dev.to
+            {link.icon}
           </a>
-        </div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
