@@ -8,12 +8,11 @@ function Contact() {
 
     console.log("Sending email with the following data:", e.target);
 
-    // Use the form element directly instead of FormData
     emailjs
       .sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        e.target, // e.target is the form element
+        e.target,
         import.meta.env.VITE_EMAILJS_USER_ID
       )
       .then(
@@ -31,12 +30,9 @@ function Contact() {
   return (
     <div
       id="contact"
-      className="relative bg-black text-white min-h-screen flex items-center justify-center py-16 px-4 lg:px-48"
+      className="relative bg-black text-white min-h-screen flex flex-col items-center justify-center py-16 px-4 lg:px-48"
     >
-      {/* Gradient Background Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 opacity-20 blur-3xl" />
-
-      {/* Starry Background Effect */}
       <div className="absolute inset-0 opacity-40 pointer-events-none">
         {[...Array(50)].map((_, i) => (
           <div
@@ -64,8 +60,7 @@ function Contact() {
           Get in Touch
         </motion.h1>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Methods */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -122,7 +117,6 @@ function Contact() {
             ))}
           </motion.div>
 
-          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -186,7 +180,6 @@ function Contact() {
           </motion.div>
         </div>
 
-        {/* Footer */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -199,7 +192,6 @@ function Contact() {
         </motion.div>
       </div>
 
-      {/* Custom CSS for Twinkle Animation */}
       <style>{`
         @keyframes twinkle {
           0% {
