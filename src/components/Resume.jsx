@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Star, Download, FileText } from "lucide-react";
-import pdfres from "../assets/Harshit_Shukla_CV_d11.pdf";
+import {  Download, FileText } from "lucide-react";
+import resume from '../assets/Harshitd11.pdf';
 import resumelogo from "../assets/resumelogo.png";
 import "../index.css";
 
@@ -188,7 +188,7 @@ function Resume() {
             </div>
           )}
           <iframe
-            src={pdfres}
+            src={resume}
             title="Resume PDF"
             width="100%"
             height="600"
