@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import {  Download, FileText } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import resume from '../assets/Harshitd11.pdf';
 import resumelogo from "../assets/resumelogo.png";
 import "../index.css";
@@ -55,10 +54,9 @@ function Resume() {
       id="resume"
       className="relative bg-black text-white py-16 md:py-44 lg:px-48 flex justify-center items-center overflow-hidden"
     >
-      {/* Starry background effect */}
       <div className="absolute inset-0 bg-black opacity-80">
         {[...Array(50)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
             className="absolute bg-white rounded-full"
             style={{
@@ -68,55 +66,24 @@ function Resume() {
               top: `${Math.random() * 100}%`,
               opacity: Math.random(),
             }}
-            animate={{
-              opacity: [0.2, 1, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
           />
         ))}
       </div>
 
-      {/* Remove gradient overlay */}
-      {/* <div className="absolute inset-0 bg-gradient-to-r from-purple-900/40 via-indigo-900/40 to-blue-900/40 mix-blend-overlay" /> */}
-
       <div className="container mx-auto flex flex-col md:flex-row items-center relative z-10 px-6">
-        {/* Content Section */}
         <div className="flex-1 text-center md:text-left md:pr-16">
-          {/* Use strong color for heading */}
-          <motion.h1
-            className="text-5xl md:text-7xl font-black tracking-tight mb-4 text-white"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-4 text-white">
             My Resume
-          </motion.h1>
+          </h1>
 
-          {/* Use strong color for description */}
-          <motion.p
-            className="text-lg text-white leading-relaxed mb-8 max-w-xl mx-auto md:mx-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
+          <p className="text-lg text-white leading-relaxed mb-8 max-w-xl mx-auto md:mx-0">
             Welcome! I'm a passionate full-stack Developer skilled in the MERN
             stack, and I enjoy crafting smooth, user-friendly experiences on the
             web. Check out my resume below to see my journey and skills in
             detail.
-          </motion.p>
+          </p>
 
-          {/* Use strong color for buttons */}
-          <motion.div
-            className="flex flex-col md:flex-row items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
+          <div className="flex flex-col md:flex-row items-center gap-4">
             <a
               href={resumeLink}
               target="_blank"
@@ -137,28 +104,13 @@ function Resume() {
               <FileText />
               {isModalOpen ? "Close Resume" : "View Resume"}
             </button>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Image Section */}
-        <motion.div
-          className="flex-1 flex justify-center mt-10 md:mt-0"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
+        <div className="flex-1 flex justify-center mt-10 md:mt-0">
           <div className="relative">
-            <div className="absolute -inset-2 bg-purple-500/50 rounded-lg blur-xl animate-pulse" />
-            <motion.div
-              className="relative w-56 h-56 md:w-auto md:h-auto rounded-lg p-1.5 shadow-2xl"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-                duration: 1,
-              }}
-            >
+            <div className="absolute -inset-2 bg-purple-500/50 rounded-lg blur-xl" />
+            <div className="relative w-56 h-56 md:w-auto md:h-auto rounded-lg p-1.5 shadow-2xl">
               <div className="bg-white/10 backdrop-blur-md rounded-lg p-2 border border-white/20">
                 <img
                   src={resumelogo}
@@ -166,20 +118,14 @@ function Resume() {
                   className="w-auto h-auto rounded-lg object-cover shadow-inner"
                 />
               </div>
-            </motion.div>
-            <motion.p
-              className="absolute bottom-4 right-4 text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded-md"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.5 }}
-            >
+            </div>
+            <p className="absolute bottom-4 right-4 text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded-md">
               AI generated image
-            </motion.p>
+            </p>
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Modal with Resume PDF */}
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
         <div className="relative">
           {isLoading && (
