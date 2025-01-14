@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Download, FileText } from "lucide-react";
-import resume from '../assets/Harshitd11.pdf';
+import resume from '../assets/Harshit_Shukla_CV_E1.pdf';
 import resumelogo from "../assets/resumelogo.png";
 import "../index.css";
 
