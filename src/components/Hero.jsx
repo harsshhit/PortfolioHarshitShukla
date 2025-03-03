@@ -1,6 +1,6 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Code, Zap } from "lucide-react";
+import { Code } from "lucide-react";
+import profile from "../assets/profile.png";
 
 const Hero = () => {
   const fadeIn = {
@@ -36,7 +36,7 @@ const Hero = () => {
             {...floatingAnimation}
           />
           <motion.img
-            src="/src/assets/profile.png"
+            src={profile}
             alt="Harshit - Software Developer"
             className="relative z-10 w-full h-full object-cover rounded-full border-4 border-white/10 shadow-2xl"
             {...floatingAnimation}
