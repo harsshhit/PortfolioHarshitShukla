@@ -6,7 +6,7 @@ import ct5 from "../assets/img/image5.png";
 import ct6 from "../assets/img/image6.png";
 import itw1 from "../assets/itw1.png";
 import arch1 from "../assets/arch1.png";
-import jl1 from "../assets/jl1.png";
+import jl1 from "../assets/JL1.png";
 import conf1 from "../assets/conf1.png";
 import mylib1 from "../assets/mylib1.png";
 
