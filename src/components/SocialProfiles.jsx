@@ -1,65 +1,7 @@
 import { useState } from "react";
-import { FaGithub, FaLinkedin, FaTwitter, FaCode, FaDev } from "react-icons/fa";
 import profileImage from "../assets/resumelogo2.png";
-
-// JSON object containing the social links and details
-const socialLinks = [
-  {
-    id: "github",
-    url: "https://github.com/harsshhit",
-    icon: <FaGithub className="text-xl" />,
-    label: "GitHub",
-    bgColor: "bg-gray-900",
-    textColor: "text-white",
-    borderColor: "border-gray-700",
-    hoverBgColor: "hover:bg-gray-700",
-    hoverBorderColor: "hover:border-white",
-  },
-  {
-    id: "twitter",
-    url: "https://twitter.com/theharryom?s=09",
-    icon: <FaTwitter className="text-xl" />,
-    label: "Twitter",
-    bgColor: "bg-blue-400",
-    textColor: "text-white",
-    borderColor: "border-blue-300",
-    hoverBgColor: "hover:bg-blue-300",
-    hoverBorderColor: "hover:border-white",
-  },
-  {
-    id: "linkedin",
-    url: "https://www.linkedin.com/in/harshit-shukla-8b706417a",
-    icon: <FaLinkedin className="text-xl" />,
-    label: "LinkedIn",
-    bgColor: "bg-blue-700",
-    textColor: "text-white",
-    borderColor: "border-blue-500",
-    hoverBgColor: "hover:bg-blue-500",
-    hoverBorderColor: "hover:border-white",
-  },
-  {
-    id: "leetcode",
-    url: "https://leetcode.com/harshh8/",
-    icon: <FaCode className="text-xl" />,
-    label: "LeetCode",
-    bgColor: "bg-yellow-400",
-    textColor: "text-black",
-    borderColor: "border-yellow-300",
-    hoverBgColor: "hover:bg-yellow-300",
-    hoverBorderColor: "hover:border-white",
-  },
-  {
-    id: "devto",
-    url: "https://dev.to/your-devto-username",
-    icon: <FaDev className="text-xl" />,
-    label: "Dev.to",
-    bgColor: "bg-black",
-    textColor: "text-white",
-    borderColor: "border-gray-700",
-    hoverBgColor: "hover:bg-gray-700",
-    hoverBorderColor: "hover:border-white",
-  },
-];
+import { socialLinks } from "../data/data";
+import { FaGithub, FaLinkedin, FaTwitter, FaCode, FaDev } from "react-icons/fa";
 
 function SocialProfiles() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -139,7 +81,13 @@ function SocialProfiles() {
             `}
             title={link.label}
           >
-            {link.icon}
+            {link.iconName === "FaGithub" && <FaGithub className="text-xl" />}
+            {link.iconName === "FaTwitter" && <FaTwitter className="text-xl" />}
+            {link.iconName === "FaLinkedin" && (
+              <FaLinkedin className="text-xl" />
+            )}
+            {link.iconName === "FaCode" && <FaCode className="text-xl" />}
+            {link.iconName === "FaDev" && <FaDev className="text-xl" />}
           </a>
         ))}
       </div>

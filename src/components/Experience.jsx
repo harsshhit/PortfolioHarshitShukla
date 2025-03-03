@@ -1,26 +1,6 @@
 import { Briefcase } from "lucide-react";
 import { Code, Star } from "lucide-react";
-
-const experienceData = [
-  {
-    id: 1,
-    title: "Frontend Developer",
-    company: "House of Marktech",
-    duration: "Sept 2024 - Dec 2024",
-    description: [
-      "Developed and maintained responsive web applications using React.js",
-      "Collaborated with the design team to implement pixel-perfect UI components",
-      "Optimized application performance and improved user experience",
-      "Participated in code reviews and team meetings",
-    ],
-    tags: [
-      "React.js",
-      "UI/UX",
-      "Performance Optimization",
-      "Team Collaboration",
-    ],
-  },
-];
+import { experienceData } from "../data/data";
 
 function ExperienceCard({ title, company, duration, description, tags }) {
   const [startDate, endDate] = duration.split(" - ");
@@ -47,7 +27,7 @@ function ExperienceCard({ title, company, duration, description, tags }) {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-gray-900 via-blue-900 to-gray-900 border-2 border-blue-500/30 rounded-2xl overflow-hidden relative shadow-2xl">
+      <div className="bg-gradient-to-b from-blue-900/30 to-black max-w-[64rem] border-2 border-blue-400/50 rounded-lg overflow-hidden sm:pr-8 relative sm:h-96 transition sm:group-even:pl-8 dark:text-white dark:bg-white/10 dark:hover:bg-white/20">
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
 
         <div className="p-4 md:p-8 relative z-10">
@@ -61,9 +41,7 @@ function ExperienceCard({ title, company, duration, description, tags }) {
                 <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white via-blue-400 to-white bg-clip-text text-transparent">
                   {title}
                 </h3>
-                <p className="text-blue-400 text-base md:text-lg">
-                  {company}
-                </p>
+                <p className="text-blue-400 text-base md:text-lg">{company}</p>
               </div>
             </div>
 
@@ -102,25 +80,9 @@ const Experience = () => {
   return (
     <div
       id="experience"
-      className="relative bg-gray-900 text-white py-12 md:py-16 lg:py-44 px-4 md:px-8 lg:px-48 flex justify-center items-center overflow-hidden"
+      className="relative  text-white py-12 md:py-16 lg:py-44 px-4 md:px-8 lg:px-48 flex justify-center items-center overflow-hidden"
     >
-      {/* Starry background effect */}
-      <div className="absolute inset-0 bg-black opacity-80">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bg-white rounded-full"
-            style={{
-              width: `${Math.random() * 3}px`,
-              height: `${Math.random() * 3}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              opacity: Math.random(),
-            }}
-          />
-        ))}
-      </div>
-
+    
       <div className="container mx-auto flex flex-col items-center relative z-10">
         {/* Heading */}
         <div className="text-center mb-8 md:mb-16">
