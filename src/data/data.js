@@ -134,7 +134,7 @@ export const projectsData = [
       "A personal book library management app to track reading progress.",
     tags: ["React", "Node.js", "MongoDB"],
     imageUrl: [mylib1],
-    liveLink: "https://my-library-nine-cyan.vercel.app/",
+    liveLink: "https://aaralibrary.vercel.app/",
     github: "https://github.com/harsshhit/MyLibrary",
   },
 ];
