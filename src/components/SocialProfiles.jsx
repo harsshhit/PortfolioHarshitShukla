@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import profileImage from "../assets/resumelogo2.png";
 import { socialLinks } from "../data/data";
 import { FaGithub, FaLinkedin, FaTwitter, FaCode, FaDev } from "react-icons/fa";
+import PropTypes from "prop-types"; // Import PropTypes for prop validation
 
 function SocialProfiles() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -10,88 +11,117 @@ function SocialProfiles() {
     setIsExpanded(!isExpanded);
   };
 
+  // Add blur effect to the rest of the application when expanded
+  useEffect(() => {
+    const mainContent = document.getElementById("root") || document.body;
+
+    if (isExpanded) {
+      mainContent.classList.add("blur-effect");
+    } else {
+      mainContent.classList.remove("blur-effect");
+    }
+
+    return () => {
+      mainContent.classList.remove("blur-effect");
+    };
+  }, [isExpanded]);
+
+  // Map component for social icons
+  const SocialIcon = ({ iconName }) => {
+    const icons = {
+      FaGithub: <FaGithub className="text-xl" />,
+      FaTwitter: <FaTwitter className="text-xl" />,
+      FaLinkedin: <FaLinkedin className="text-xl" />,
+      FaCode: <FaCode className="text-xl" />,
+      FaDev: <FaDev className="text-xl" />,
+    };
+
+    return icons[iconName] || null;
+  };
+
+  SocialIcon.propTypes = {
+    iconName: PropTypes.string.isRequired, // Add prop validation for iconName
+  };
+
   return (
-    <div
-      id="Socials"
-      className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50 flex flex-col items-end"
-      style={{ zIndex: 50 }}
-    >
-      {/* Enhanced Main Button with Profile Image */}
-      <button
-        onClick={toggleExpand}
-        className={`
-          bg-gradient-to-br from-blue-500 to-purple-600 
-          text-white h-14 w-14 rounded-full 
-          shadow-xl flex items-center justify-center 
-          transition-all duration-300 ease-in-out
-          hover:shadow-2xl hover:scale-110
-          active:scale-95
-          ${isExpanded ? "mb-4 rotate-45" : ""}
-          relative overflow-hidden
-          group
-        `}
-      >
-        {/* Gradient Border Effect */}
-        <div className="absolute inset-1 border-4 border-transparent bg-gradient-to-br from-blue-400 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <>
+      {isExpanded && (
+        <div
+          className="fixed inset-0 bg-black/20 backdrop-blur-md z-30 transition-opacity duration-300"
+          onClick={toggleExpand}
+          aria-hidden="true"
+        />
+      )}
 
-        {/* Profile Image with Hover Effect */}
-        <div className="absolute inset-1 rounded-full overflow-hidden">
-          <img
-            src={profileImage}
-            alt="Profile"
-            className={`
-              w-full h-full object-cover 
-              transition-transform duration-300
-              group-hover:scale-110 
-              group-hover:rotate-6
-            `}
-          />
-        </div>
-
-        {/* Overlay Effects */}
-        <div className="absolute inset-0 bg-blue-500 animate-ping opacity-25 rounded-full z-[-1]"></div>
-        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full z-10"></div>
-      </button>
-
-      {/* Social Links */}
       <div
-        className={`
-          flex flex-col space-y-4 
-          transition-all duration-300 ease-in-out 
-          overflow-hidden
-          ${isExpanded ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"}
-        `}
+        id="Socials"
+        className="fixed top-1/2 right-4 transform -translate-y-1/2 z-40 flex flex-col items-end"
       >
-        {socialLinks.map((link) => (
-          <a
-            key={link.id}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`
-              ${link.bgColor} ${link.textColor} 
-              h-10 w-10 font-semibold p-2 
-              rounded-full shadow-md 
-              inline-flex items-center justify-center 
-              transition duration-300 border-2 
-              ${link.borderColor} 
-              ${link.hoverBgColor} 
-              ${link.hoverBorderColor}
-              transform hover:scale-110
-            `}
-            title={link.label}
-          >
-            {link.iconName === "FaGithub" && <FaGithub className="text-xl" />}
-            {link.iconName === "FaTwitter" && <FaTwitter className="text-xl" />}
-            {link.iconName === "FaLinkedin" && (
-              <FaLinkedin className="text-xl" />
-            )}
-            {link.iconName === "FaCode" && <FaCode className="text-xl" />}
-            {link.iconName === "FaDev" && <FaDev className="text-xl" />}
-          </a>
-        ))}
+        <button
+          onClick={toggleExpand}
+          className={`
+            bg-gradient-to-br from-blue-500 to-purple-600 
+            text-white h-14 w-14 rounded-full 
+            shadow-lg flex items-center justify-center 
+            transition-all duration-300 ease-in-out
+            hover:shadow-xl hover:scale-105
+            active:scale-95
+            ${isExpanded ? "mb-4 rotate-45" : ""}
+            relative overflow-hidden
+            group z-50
+          `}
+          aria-expanded={isExpanded}
+          aria-label="Toggle social links"
+        >
+          <div className="absolute inset-0 rounded-full ring-2 ring-white/30 group-hover:ring-white/50 transition-all duration-300"></div>
+
+          <div className="absolute inset-1 rounded-full overflow-hidden bg-white">
+            <img
+              src={profileImage}
+              alt="Profile"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+          </div>
+
+          <span className="absolute inset-0 rounded-full bg-blue-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+        </button>
+
+        <div
+          className={`
+            flex flex-col space-y-3 
+            transition-all duration-300 ease-in-out 
+            ${
+              isExpanded
+                ? "opacity-100 max-h-96 mt-2"
+                : "opacity-0 max-h-0 pointer-events-none"
+            }
+          `}
+        >
+          {socialLinks.map((link) => (
+            <a
+              key={link.id}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`
+                ${link.bgColor || "bg-gray-800"} 
+                ${link.textColor || "text-white"} 
+                h-10 w-10 rounded-full shadow-md 
+                flex items-center justify-center 
+                transition-all duration-200
+                transform hover:scale-110 hover:shadow-lg
+                border-2 ${link.borderColor || "border-transparent"}
+                ${link.hoverBgColor || "hover:bg-gray-700"}
+              `}
+              title={link.label}
+              aria-label={link.label}
+            >
+              <SocialIcon iconName={link.iconName} />
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

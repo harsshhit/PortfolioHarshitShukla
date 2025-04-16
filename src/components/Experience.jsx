@@ -1,6 +1,16 @@
 import { Briefcase } from "lucide-react";
 import { Code, Star } from "lucide-react";
 import { experienceData } from "../data/data";
+// import { motion } from "framer-motion";
+import PropTypes from "prop-types";
+
+ExperienceCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  company: PropTypes.string.isRequired,
+  duration: PropTypes.string.isRequired,
+  description: PropTypes.arrayOf(PropTypes.string).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string)
+};
 
 function ExperienceCard({ title, company, duration, description, tags }) {
   const [startDate, endDate] = duration.split(" - ");
@@ -80,10 +90,12 @@ const Experience = () => {
   return (
     <div
       id="experience"
-      className="relative  text-white py-12 md:py-16 lg:py-44 px-4 md:px-8 lg:px-48 flex justify-center items-center overflow-hidden"
+      className="relative min-h-screen bg-black text-white py-16 md:py-32 flex justify-center items-center overflow-hidden"
     >
-    
-      <div className="container mx-auto flex flex-col items-center relative z-10">
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+
+      <div className="container mx-auto relative z-10 px-6">
         {/* Heading */}
         <div className="text-center mb-8 md:mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white flex items-center justify-center gap-2 md:gap-4">

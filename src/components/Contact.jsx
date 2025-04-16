@@ -30,37 +30,86 @@ function Contact() {
   return (
     <div
       id="contact"
-      className="relative bg-black text-white min-h-screen flex flex-col items-center justify-center py-16 px-4 lg:px-48"
+      className="relative min-h-screen bg-black text-white py-16 md:py-32 flex justify-center items-center overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 opacity-20 blur-3xl" />
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute bg-white rounded-full opacity-50"
-            style={{
-              width: `${Math.random() * 3}px`,
-              height: `${Math.random() * 3}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animation: "twinkle 3s infinite alternate",
-            }}
-          />
-        ))}
-      </div>
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
 
-      <div className="container mx-auto relative z-10 max-w-6xl">
+      <div className="container mx-auto relative z-10 px-6">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-5xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+          className="section-title text-center"
         >
           Get in Touch
         </motion.h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            className="card p-10"
+          >
+            <form className="space-y-6" onSubmit={sendEmail}>
+              {[
+                {
+                  id: "name",
+                  type: "text",
+                  placeholder: "Your Name",
+                  required: true,
+                },
+                { id: "email", type: "email", placeholder: "Your Email" },
+                { id: "phone", type: "tel", placeholder: "Your Phone Number" },
+              ].map((field) => (
+                <div key={field.id}>
+                  <label
+                    htmlFor={field.id}
+                    className="block mb-2 text-sm font-medium text-gray-300"
+                  >
+                    {field.placeholder}
+                  </label>
+                  <input
+                    type={field.type}
+                    id={field.id}
+                    name={field.id}
+                    className="input w-full"
+                    placeholder={field.placeholder}
+                    required={field.required}
+                  />
+                </div>
+              ))}
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block mb-2 text-sm font-medium text-gray-300"
+                >
+                  Your Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  className="input w-full h-40"
+                  placeholder="Write your message here..."
+                  required
+                ></textarea>
+              </div>
+
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative px-8 py-3 rounded-lg bg-neutral-900 text-white font-medium 
+                  border border-neutral-800 hover:border-neutral-700 transition-all duration-300
+                  flex items-center gap-2 w-full md:w-auto justify-center"
+              >
+                Send Message
+              </motion.button>
+            </form>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -97,86 +146,24 @@ function Contact() {
                 key={index}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-xl flex items-center space-x-6 hover:bg-white/20 transition-all duration-300"
+                className="card flex items-center space-x-6"
               >
                 {contact.icon}
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-200">
+                  <h3 className="text-xl font-semibold text-white">
                     {contact.title}
                   </h3>
                   <a
                     href={contact.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-300 hover:text-blue-200 transition duration-300"
+                    className="text-blue-400 hover:text-blue-300 transition duration-300"
                   >
                     {contact.label}
                   </a>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            className="bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-xl"
-          >
-            <form className="space-y-6" onSubmit={sendEmail}>
-              {[
-                {
-                  id: "name",
-                  type: "text",
-                  placeholder: "Your Name",
-                  required: true,
-                },
-                { id: "email", type: "email", placeholder: "Your Email" },
-                { id: "phone", type: "tel", placeholder: "Your Phone Number" },
-              ].map((field) => (
-                <div key={field.id}>
-                  <label
-                    htmlFor={field.id}
-                    className="block mb-2 text-sm font-medium text-gray-300"
-                  >
-                    {field.placeholder}
-                  </label>
-                  <input
-                    type={field.type}
-                    id={field.id}
-                    name={field.id}
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                    placeholder={field.placeholder}
-                    required={field.required}
-                  />
-                </div>
-              ))}
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block mb-2 text-sm font-medium text-gray-300"
-                >
-                  Your Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  className="w-full px-4 py-3 h-40 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                  placeholder="Write your message here..."
-                  required
-                ></textarea>
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                type="submit"
-                className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg shadow-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-              >
-                Send Message
-              </motion.button>
-            </form>
           </motion.div>
         </div>
 

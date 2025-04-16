@@ -87,6 +87,7 @@ export const projectsData = [
     tags: ["React", "Node.js", "MongoDB"],
     imageUrl: [itw1],
     liveLink: "https://intothewildstays.in/",
+    github: "https://github.com/harsshhit/IntoTheWildStays",
   },
   // {
   //   id: 3,
@@ -106,6 +107,7 @@ export const projectsData = [
     tags: ["Next.js", "Tailwind CSS"],
     imageUrl: [arch1], // Add images if available
     liveLink: "https://archspaceinterio.com/",
+    github: "https://github.com/harsshhit/ArchSpaceInterio",
   },
   {
     id: 5,
@@ -197,4 +199,9 @@ export const skillsData = {
     "Object-Oriented Programming (OOP)",
     "Data Structures and Algorithms",
   ],
+};
+
+export const resumeCVData = {
+  resumeLink:
+    "https://www.canva.com/design/DAGIzEBuFMw/-5cJ772Ooyji5XfJDZVZug/view?utm_content=DAGIzEBuFMw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h054c5c861a",
 };

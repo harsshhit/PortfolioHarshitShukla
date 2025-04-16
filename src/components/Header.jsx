@@ -16,18 +16,20 @@ const Nav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-8 left-1/2 transform -translate-x-1/2 shadow-sm shadow-black rounded-full px-1 py-1 z-50">
-      <ul className="flex gap-2 justify-center bg-opacity-30 bg-black rounded-full p-2 backdrop-blur-md shadow-sm shadow-black">
+    <nav className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+      <ul className="flex gap-3 justify-center bg-[#111111]/80 rounded-full p-2 backdrop-blur-md 
+                    border border-[#262626] shadow-lg shadow-black/20">
         {navItems.map((item) => (
           <li key={item.id}>
             <a
               href={item.id}
               onClick={() => setActiveNav(item.id)}
-              className={`p-4 h-15 w-15 rounded-full text-white flex transition duration-300 border-2 hover:border-white hover:bg-gray-700 border-transparent ${
-                activeNav === item.id
-                  ? "bg-primary bg-gray-800"
-                  : "hover:bg-opacity-40"
-              }`}
+              className={`p-4 rounded-full text-gray-300 flex transition-all duration-300
+                         hover:text-white hover:scale-110 transform-gpu
+                         ${activeNav === item.id
+                    ? "text-blue-400 bg-[#1a1a1a] border border-blue-500/50"
+                    : "hover:bg-[#1a1a1a]"
+                }`}
             >
               {item.icon}
             </a>
