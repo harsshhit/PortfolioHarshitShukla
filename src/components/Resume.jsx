@@ -1,12 +1,11 @@
 import { FileText } from "lucide-react";
 import { motion } from "framer-motion";
-import resumelogo from "../assets/resumelogo.png";
+import resumelogo from "../assets/resumeimage.png";
 import "../index.css";
 import { resumeCVData } from "../data/data";
 
 function Resume() {
   const resumeLink = resumeCVData.resumeLink;
-
   const handleViewResume = () => {
     window.open(resumeLink, "_blank");
   };
@@ -59,7 +58,7 @@ function Resume() {
         >
           <div className="relative group">
             <div className="absolute -inset-2 bg-gradient-to-r from-neutral-800 to-neutral-600 rounded-lg blur-xl opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt" />
-            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-lg p-2">
+            <div className="relative w-48 h-48 md:w-48 md:h-48 rounded-lg p-2">
               <div className="bg-neutral-900 rounded-lg p-2 h-full backdrop-blur-sm border border-neutral-800 overflow-hidden group-hover:border-neutral-700 transition duration-300">
                 <motion.img
                   whileHover={{ scale: 1.05, rotate: 2 }}
