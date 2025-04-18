@@ -16,7 +16,8 @@ function ExperienceCard({ title, company, duration, description, tags }) {
   const [startDate, endDate] = duration.split(" - ");
 
   return (
-    <div className="group mb-12 ml-8 relative pl-12 md:pl-24">
+     
+    <div id="experience" className="group mb-12 ml-8 relative pl-12 md:pl-24">
       {/* Timeline Element */}
       <div className="absolute left-0 top-0 h-full w-8 md:w-16 flex items-center justify-center">
         <div className="h-full w-1 bg-gradient-to-t from-blue-500/30 to-blue-500 relative">

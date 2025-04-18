@@ -1,12 +1,15 @@
 import { FaEnvelope, FaLinkedin, FaWhatsapp, FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
 import emailjs from "emailjs-com";
+import { useState } from 'react';
 
 function Contact() {
+  // Initialize with a state value
+  const [formState, setFormState] = useState('idle'); // 'idle', 'sending', 'success', 'error'
+
   const sendEmail = (e) => {
     e.preventDefault();
-
-    console.log("Sending email with the following data:", e.target);
+    setFormState('sending'); // Update form state
 
     emailjs
       .sendForm(
@@ -18,11 +21,11 @@ function Contact() {
       .then(
         (result) => {
           console.log(result.text);
-          alert("Message sent successfully!");
+          setFormState('success'); // Update form state
         },
         (error) => {
           console.log(error.text);
-          alert("Failed to send message, please try again.");
+          setFormState('error'); // Update form state
         }
       );
   };
@@ -101,12 +104,26 @@ function Contact() {
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-8 py-3 rounded-lg bg-neutral-900 text-white font-medium 
+                disabled={formState === 'sending'}
+                className={`group relative px-8 py-3 rounded-lg bg-neutral-900 text-white font-medium
                   border border-neutral-800 hover:border-neutral-700 transition-all duration-300
-                  flex items-center gap-2 w-full md:w-auto justify-center"
+                  flex items-center gap-2 w-full md:w-auto justify-center
+                  ${formState === 'sending' ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                Send Message
+                {formState === 'sending' ? 'Sending...' : 'Send Message'}
               </motion.button>
+
+              {formState === 'success' && (
+                <div className="mt-4 p-3 bg-green-900/30 text-green-400 rounded-lg">
+                  Message sent successfully! I'll get back to you soon.
+                </div>
+              )}
+
+              {formState === 'error' && (
+                <div className="mt-4 p-3 bg-red-900/30 text-red-400 rounded-lg">
+                  There was an error sending your message. Please try again later.
+                </div>
+              )}
             </form>
           </motion.div>
 
@@ -194,3 +211,6 @@ function Contact() {
 }
 
 export default Contact;
+
+
+

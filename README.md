@@ -1,16 +1,92 @@
-# React + Vite
+# Portfolio - Harshit Shukla
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive portfolio website built with React and Vite, showcasing my skills, experience, projects, and contact information.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 Modern and responsive design
+- ⚡ Fast and optimized performance
+- 🎭 Smooth animations using GSAP and Framer Motion
+- 📱 Mobile-friendly interface
+- 📧 Contact form with EmailJS integration
+- 🎯 Interactive project showcase
+- 📄 Resume download functionality
 
+## Tech Stack
 
-#hero
-#skills
-#experiance
-#projects
-#resume
-#contact
+- React 18
+- Vite
+- TailwindCSS
+- GSAP (GreenSock Animation Platform)
+- Framer Motion
+- EmailJS
+- React Router DOM
+- Font Awesome
+- Lucide React
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/portfolio-harshit-shukla.git
+cd portfolio-harshit-shukla
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create a `.env` file in the root directory and add your environment variables
+
+```env
+VITE_EMAILJS_USER_ID=your_emailjs_user_id
+VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
+```
+
+4. Start the development server
+
+```bash
+npm run dev
+```
+
+5. Build for production
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+- `/src` - Source code
+  - `/components` - React components
+  - `/assets` - Images, fonts, and other static assets
+  - `/styles` - CSS and styling files
+  - `/utils` - Utility functions and helpers
+
+## Sections
+
+- Hero
+- Skills
+- Experience
+- Projects
+- Resume
+- Contact
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+Feel free to reach out to me through the contact form on the website or connect with me on social media.
