@@ -47,7 +47,8 @@ const Header = () => {
     setShowSocials(newSocialsState);
     // Update context with social visibility state
     setSocialsVisible(newSocialsState);
-    // Always set isHeaderActive to true when social icons are shown, false when hidden
+    // Always set isHeaderActive to true when resumelogo button is clicked
+    // This ensures the background is always blurred when social icons are toggled
     toggleHeaderActive(newSocialsState);
   };
 
@@ -78,17 +79,23 @@ const Header = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed bottom-5 xs:bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-0 right-0 mx-auto z-50 w-fit max-w-[90vw] flex justify-center"
-      onMouseEnter={() => toggleHeaderActive(true)}
+      className="fixed bottom-5 xs:bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-0 right-0 mx-auto z-[60] w-fit max-w-[90vw] flex justify-center"
+      onMouseEnter={() => {
+        // Don't change blur state on mouse enter
+        // Let the toggleSocials function handle the blur effect
+      }}
       onMouseLeave={() => {
-        // Only remove blur effect if social icons are not shown
-        if (!showSocials) toggleHeaderActive(false);
+        // Don't change blur state on mouse leave
+        // Let the toggleSocials function handle the blur effect
         setHoveredItem(null);
       }}
-      onFocus={() => toggleHeaderActive(true)}
+      onFocus={() => {
+        // Don't change blur state on focus
+        // Let the toggleSocials function handle the blur effect
+      }}
       onBlur={() => {
-        // Only remove blur effect if social icons are not shown
-        if (!showSocials) toggleHeaderActive(false);
+        // Don't change blur state on blur
+        // Let the toggleSocials function handle the blur effect
         setHoveredItem(null);
       }}
     >
@@ -102,23 +109,23 @@ const Header = () => {
         }}
       >
         <motion.ul
-          className={`flex flex-wrap gap-2 xs:gap-2.5 sm:gap-3 md:gap-3.5 justify-center bg-gradient-to-r from-[#111111]/90 via-[#111111]/95 to-[#111111]/90 rounded-full p-2 xs:p-2.5 sm:p-3 md:p-3.5 backdrop-blur-md
-                    border ${showSocials ? 'border-blue-500/30' : 'border-[#262626]'} shadow-lg ${showSocials ? 'shadow-blue-500/10' : 'shadow-black/20'} transition-all duration-300 overflow-visible`}
+          className={`flex flex-wrap gap-2 xs:gap-2.5 sm:gap-3 md:gap-3.5 justify-center bg-gradient-to-r from-[#111111]/95 via-[#111111]/98 to-[#111111]/95 rounded-full p-2 xs:p-2.5 sm:p-3 md:p-3.5 backdrop-blur-xl
+                    border ${showSocials ? 'border-blue-500/40' : 'border-[#262626]'} shadow-lg ${showSocials ? 'shadow-blue-500/20' : 'shadow-black/20'} transition-all duration-300 overflow-visible`}
           layout
         >
           {navItems.map((item) => (
             <motion.li key={item.id} layout className="relative">
               <a
                 href={item.id}
-                onClick={() => {
+                onClick={(e) => {
+                  // Prevent event propagation to avoid toggling blur effect
+                  e.stopPropagation();
+
                   setActiveNav(item.id);
                   // For mobile, toggle tooltip visibility on click
                   if (isMobile) {
                     setHoveredItem(hoveredItem === item.id ? null : item.id);
                   }
-                  // Temporarily show blur effect when clicking a nav item
-                  toggleHeaderActive(true);
-                  setTimeout(() => toggleHeaderActive(false), 1000);
                 }}
                 onMouseEnter={() => setHoveredItem(item.id)}
                 onMouseLeave={() => !isMobile && setHoveredItem(null)}
@@ -218,14 +225,28 @@ const Header = () => {
               exit={{ opacity: 0, scale: 0.8, y: -10 }}
               transition={{ duration: 0.3 }}
               className="absolute -top-16 xs:-top-18 sm:-top-20 md:-top-22 left-0 right-0 mx-auto w-fit"
+              onClick={(e) => {
+                // Prevent event propagation to avoid toggling blur effect
+                e.stopPropagation();
+              }}
             >
-              <div className="flex items-center justify-center flex-wrap gap-2 xs:gap-2.5 sm:gap-3 md:gap-3.5 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-blue-500/20 backdrop-blur-md p-2.5 xs:p-3 sm:p-3.5 md:p-4 rounded-full border border-white/10 shadow-lg shadow-black/20">
+              <div
+                className="flex items-center justify-center flex-wrap gap-2 xs:gap-2.5 sm:gap-3 md:gap-3.5 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-blue-500/30 backdrop-blur-xl p-2.5 xs:p-3 sm:p-3.5 md:p-4 rounded-full border border-white/20 shadow-lg shadow-black/30"
+                onClick={(e) => {
+                  // Prevent event propagation to avoid toggling blur effect
+                  e.stopPropagation();
+                }}
+              >
                 {socialLinks.map((link) => (
                   <a
                     key={link.id}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => {
+                      // Prevent event propagation to avoid toggling blur effect
+                      e.stopPropagation();
+                    }}
                     className={`
                       ${link.bgColor || "bg-gray-800"}
                       ${link.textColor || "text-white"}

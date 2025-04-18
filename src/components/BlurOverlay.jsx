@@ -11,24 +11,24 @@ const BlurOverlay = () => {
           initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
           animate={{
             opacity: 1,
-            backdropFilter: showingSocials ? 'blur(16px)' : 'blur(8px)'
+            backdropFilter: showingSocials ? 'blur(20px)' : 'blur(8px)'
           }}
           exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
           transition={{ duration: 0.4 }}
           className={`fixed inset-0 ${showingSocials
             ? 'bg-gradient-to-b from-black/60 to-black/50'
             : 'bg-gradient-to-b from-black/40 to-black/30'
-          } z-40 transition-all duration-300`}
+          } z-40 transition-all duration-300 pointer-events-none`}
           style={{
-            backdropFilter: showingSocials ? 'blur(16px)' : 'blur(8px)',
-            WebkitBackdropFilter: showingSocials ? 'blur(16px)' : 'blur(8px)'
+            backdropFilter: showingSocials ? 'blur(20px)' : 'blur(8px)',
+            WebkitBackdropFilter: showingSocials ? 'blur(20px)' : 'blur(8px)'
           }}
           aria-hidden="true"
         >
           {/* Add subtle animated gradient when social icons are shown */}
           {showingSocials && (
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5"
+              className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
