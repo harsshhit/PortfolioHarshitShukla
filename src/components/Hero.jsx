@@ -54,7 +54,7 @@ const Hero = () => {
           <div className="relative w-[220px] h-[220px] xs:w-[280px] xs:h-[280px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] lg:w-[450px] lg:h-[450px]">
             <motion.div
               className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full blur-3xl opacity-10"
-              {...floatingAnimation}
+             // {...floatingAnimation}
             />
             <div className="relative z-10 w-full h-full rounded-full border-4 border-[#262626] shadow-2xl shadow-black/20 overflow-hidden">
               {/* Loading skeleton */}
