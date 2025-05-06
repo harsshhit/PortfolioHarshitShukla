@@ -68,7 +68,7 @@ const Hero = () => {
                 onLoad={handleImageLoad}
                 loading="eager"
                 fetchpriority="high"
-                {...floatingAnimation}
+                // {...floatingAnimation}
               />
             </div>
           </div>
