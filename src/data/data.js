@@ -49,10 +49,10 @@ export const socialLinks = [
     url: "https://leetcode.com/harshh8/",
     iconName: "FaCode",
     label: "LeetCode",
-    bgColor: "bg-yellow-400",
+    bgColor: "bg-blue-400",
     textColor: "text-black",
-    borderColor: "border-yellow-300",
-    hoverBgColor: "hover:bg-yellow-300",
+    borderColor: "border-blue-300",
+    hoverBgColor: "hover:bg-blue-300",
     hoverBorderColor: "hover:border-white",
   },
   {
@@ -111,53 +111,96 @@ export const projectsData = [
   },
   {
     id: 5,
-    title: "Job Listing",
+    title: "Riddler - AI-Powered Interview Preparation",
     description:
-      "A job listing platform with filtering and search functionality.",
-    tags: ["React", "Redux", "Tailwind CSS"],
+      "AI-powered technical interview preparation app built with Next.js and Google Gemini AI. Features adaptive learning, 15+ programming topics, OAuth authentication, and comprehensive analytics.",
+    tags: ["Next.js", "TypeScript", "Google Gemini AI", "NextAuth.js", "MongoDB", "Tailwind CSS", "Shadcn/ui", "Recharts"],
     imageUrl: [jl1],
-    liveLink: "https://joblisting-seven.vercel.app/",
-    github: "https://github.com/harsshhit/joblisting",
+    liveLink: "https://riddlerlive.vercel.app/",
+    github: "https://github.com/harsshhit/riddler",
   },
-  {
-    id: 6,
-    title: "Conference App",
-    description:
-      "A MERN stack application for managing and scheduling conferences.",
-    tags: ["MERN", "MongoDB", "Express", "React", "Node.js"],
-    imageUrl: [conf1],
-    liveLink: "https://conference-mern-frontend.vercel.app/",
-    github: "https://github.com/harsshhit/conference-mern-frontend",
-  },
-  {
-    id: 7,
-    title: "My Library",
-    description:
-      "A personal book library management app to track reading progress.",
-    tags: ["React", "Node.js", "MongoDB"],
-    imageUrl: [mylib1],
-    liveLink: "https://aaralibrary.vercel.app/",
-    github: "https://github.com/harsshhit/MyLibrary",
-  },
+  
+  // {
+  //   id: 5,
+  //   title: "Job Listing",
+  //   description:
+  //     "A job listing platform with filtering and search functionality.",
+  //   tags: ["React", "Redux", "Tailwind CSS"],
+  //   imageUrl: [jl1],
+  //   liveLink: "https://joblisting-seven.vercel.app/",
+  //   github: "https://github.com/harsshhit/joblisting",
+  // },
+  // {
+  //   id: 6,
+  //   title: "Conference App",
+  //   description:
+  //     "A MERN stack application for managing and scheduling conferences.",
+  //   tags: ["MERN", "MongoDB", "Express", "React", "Node.js"],
+  //   imageUrl: [conf1],
+  //   liveLink: "https://conference-mern-frontend.vercel.app/",
+  //   github: "https://github.com/harsshhit/conference-mern-frontend",
+  // },
+  // {
+  //   id: 7,
+  //   title: "My Library",
+  //   description:
+  //     "A personal book library management app to track reading progress.",
+  //   tags: ["React", "Node.js", "MongoDB"],
+  //   imageUrl: [mylib1],
+  //   liveLink: "https://aaralibrary.vercel.app/",
+  //   github: "https://github.com/harsshhit/MyLibrary",
+  // },
 ];
 
 export const experienceData = [
   {
     id: 1,
-    title: "Frontend Developer",
-    company: "House of Marktech",
-    duration: "Sept 2024 - Dec 2024",
+    title: "Software Developer",
+    company: "PRP Webtech",
+    duration: "May 2025 – Present",
     description: [
-      "Developed and maintained responsive web applications using React.js",
-      "Collaborated with the design team to implement pixel-perfect UI components",
-      "Optimized application performance and improved user experience",
-      "Participated in code reviews and team meetings",
+      "Built and optimized responsive UIs using React.js and Tailwind CSS, reducing page load times by 30%",
+      "Refactored legacy codebase, improving maintainability and cutting bug reports by 25%",
     ],
     tags: [
       "React.js",
-      "UI/UX",
+      "Tailwind CSS",
+      "REST APIs",
       "Performance Optimization",
-      "Team Collaboration",
+    ],
+  },
+  {
+    id: 2,
+    title: "Frontend Developer",
+    company: "House of Marktech",
+    duration: "Sept 2024 – Jan 2025",
+    description: [
+      "Developed dynamic, cross-device interfaces with React.js and Tailwind CSS, achieving a consistent user experience across platforms",
+      "Partnered with design and product teams to refine UI/UX, increasing user engagement metrics by 15%",
+    ],
+    tags: [
+      "React.js",
+      "Tailwind CSS",
+      "UI/UX",
+      "Cross-platform Development",
+      "User Engagement",
+    ],
+  },
+  {
+    id: 3,
+    title: "Full Stack Web Developer",
+    company: "SO Infotech (P) Ltd.",
+    duration: "Jan 2024 – June 2024",
+    description: [
+      "Led the end-to-end development of a social networking platform using the MERN stack, enabling scalable real-time interactions",
+      "Integrated secure authentication and cloud-hosted MongoDB, enhancing reliability for 5,000+ test users",
+    ],
+    tags: [
+      "MERN Stack",
+      "MongoDB",
+      "Authentication",
+      "Real-time Applications",
+      "Cloud Integration",
     ],
   },
 ];
