@@ -1,7 +1,4 @@
 import { useState, useEffect } from "react";
-import { BiSolidUser, BiSolidBook } from "react-icons/bi";
-import { RiToolsFill, RiFileHistoryFill } from "react-icons/ri";
-import {  BsFillFileEarmarkPdfFill, BsFillChatRightDotsFill } from "react-icons/bs";
 import { FaGithub, FaTwitter, FaLinkedin, FaCode, FaDev } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useHeaderContext } from "../context/HeaderContext";
@@ -9,7 +6,6 @@ import { socialLinks } from "../data/data";
 import resumelogo from "../assets/resumelogo2svg.png";
 
 const Header = () => {
-  const [activeNav, setActiveNav] = useState("#");
   const [showSocials, setShowSocials] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -52,15 +48,6 @@ const Header = () => {
     toggleHeaderActive(newSocialsState);
   };
 
-  const navItems = [
-    { id: "#", icon: <BiSolidUser />, label: "About" },
-    // { id: "#skills", icon: <BiSolidBook />, label: "Skills" },
-    { id: "#experience", icon: <RiFileHistoryFill />, label: "Experience" },
-    { id: "#projects", icon: <RiToolsFill />, label: "Projects" },
-    { id: "#resume", icon: <BsFillFileEarmarkPdfFill />, label: "Resume" },
-    { id: "#contact", icon: <BsFillChatRightDotsFill />, label: "Contact" },
-  ];
-
   // Social media icon component
   const SocialIcon = ({ iconName }) => {
     const icons = {
@@ -75,31 +62,118 @@ const Header = () => {
   };
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed bottom-5 xs:bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-0 right-0 mx-auto z-[60] w-fit max-w-[90vw] flex justify-center"
-      onMouseEnter={() => {
-        // Don't change blur state on mouse enter
-        // Let the toggleSocials function handle the blur effect
-      }}
-      onMouseLeave={() => {
-        // Don't change blur state on mouse leave
-        // Let the toggleSocials function handle the blur effect
-        setHoveredItem(null);
-      }}
-      onFocus={() => {
-        // Don't change blur state on focus
-        // Let the toggleSocials function handle the blur effect
-      }}
-      onBlur={() => {
-        // Don't change blur state on blur
-        // Let the toggleSocials function handle the blur effect
-        setHoveredItem(null);
-      }}
-    >
-      {/* Main navigation bar */}
+    <>
+      {/* Full-page social media overlay */}
+      <AnimatePresence>
+        {showSocials && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-gradient-to-br from-[#111111]/95 via-[#0a0a0a]/98 to-[#111111]/95 backdrop-blur-xl z-[100] flex items-center justify-center"
+            onClick={() => setShowSocials(false)}
+          >
+            {/* Close button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              onClick={() => setShowSocials(false)}
+              className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-[#D4AF37] hover:text-[#FFD700] text-3xl font-bold transition-colors duration-300 z-[110]"
+              aria-label="Close social links"
+            >
+              ✕
+            </motion.button>
+
+            {/* Social icons container */}
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.8 }}
+              transition={{ delay: 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
+              className="flex flex-col items-center justify-center space-y-8 p-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Title */}
+              <motion.h2
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+                className="text-4xl md:text-5xl font-bold text-[#D4AF37] mb-4 text-center"
+              >
+                Connect With Me
+              </motion.h2>
+
+              {/* Social icons grid */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ 
+                      delay: 0.4 + (index * 0.1), 
+                      duration: 0.4,
+                      type: "spring",
+                      stiffness: 100
+                    }}
+                    whileHover={{ 
+                      scale: 1.1, 
+                      y: -5,
+                      transition: { duration: 0.2 }
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`
+                      ${link.bgColor || "bg-[#1a1a1a]"}
+                      ${link.textColor || "text-white"}
+                      w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-3xl shadow-2xl
+                      flex flex-col items-center justify-center
+                      transition-all duration-300
+                      border-2 ${link.borderColor || "border-[#D4AF37]/30"}
+                      ${link.hoverBgColor || "hover:bg-[#2a2a2a]"}
+                      hover:border-[#D4AF37]/60
+                      group overflow-hidden relative
+                      backdrop-blur-sm
+                    `}
+                    title={link.label}
+                    aria-label={link.label}
+                  >
+                    {/* Animated background */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-br from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20 transition-opacity duration-300"></div>
+
+                    {/* Icon */}
+                    <span className="relative z-10 text-2xl md:text-3xl lg:text-4xl mb-1">
+                      <SocialIcon iconName={link.iconName} />
+                    </span>
+                    
+                    {/* Label */}
+                    <span className="relative z-10 text-xs md:text-sm font-medium text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                      {link.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+
+            
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.nav
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed bottom-5 xs:bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-1/2 transform -translate-x-1/2 z-[60] w-fit"
+        onMouseLeave={() => setHoveredItem(null)}
+        onBlur={() => setHoveredItem(null)}
+      >
+      {/* Social media toggle button container */}
       <motion.div
         className="relative flex items-center justify-center w-full"
         layout
@@ -108,63 +182,24 @@ const Header = () => {
           transition: 'filter 0.3s ease-in-out'
         }}
       >
-        <motion.ul
-          className={`flex flex-wrap gap-2 xs:gap-2.5 sm:gap-3 md:gap-3.5 justify-center bg-gradient-to-r from-[#111111]/95 via-[#111111]/98 to-[#111111]/95 rounded-full p-2 xs:p-2.5 sm:p-3 md:p-3.5 backdrop-blur-xl
-                    border ${showSocials ? 'border-blue-500/40' : 'border-[#262626]'} shadow-lg ${showSocials ? 'shadow-blue-500/20' : 'shadow-black/20'} transition-all duration-300 overflow-visible`}
+        <motion.div
+          className={`flex items-center justify-center bg-gradient-to-r from-[#111111]/95 via-[#111111]/98 to-[#111111]/95 rounded-full p-3 xs:p-3.5 sm:p-4 md:p-4.5 backdrop-blur-xl
+                    border ${showSocials ? 'border-[#D4AF37]/60' : 'border-[#D4AF37]/20'} shadow-2xl ${showSocials ? 'shadow-[#D4AF37]/30' : 'shadow-black/40'} transition-all duration-500 overflow-visible
+                    ${showSocials ? 'ring-4 ring-[#D4AF37]/20' : ''}`}
           layout
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          {navItems.map((item) => (
-            <motion.li key={item.id} layout className="relative">
-              <a
-                href={item.id}
-                onClick={(e) => {
-                  // Prevent event propagation to avoid toggling blur effect
-                  e.stopPropagation();
-
-                  setActiveNav(item.id);
-                  // For mobile, toggle tooltip visibility on click
-                  if (isMobile) {
-                    setHoveredItem(hoveredItem === item.id ? null : item.id);
-                  }
-                }}
-                onMouseEnter={() => setHoveredItem(item.id)}
-                onMouseLeave={() => !isMobile && setHoveredItem(null)}
-                onFocus={() => setHoveredItem(item.id)}
-                onBlur={() => !isMobile && setHoveredItem(null)}
-                className={`p-2.5 xs:p-3 sm:p-3.5 md:p-4 lg:p-4.5 rounded-full text-gray-300 flex transition-all duration-300
-                          hover:text-white hover:scale-110 transform-gpu text-lg xs:text-xl sm:text-xl md:text-2xl
-                          ${activeNav === item.id
-                      ? "text-blue-400 bg-[#1a1a1a] border border-blue-500/50 scale-105"
-                      : "hover:bg-[#1a1a1a]"
-                  }`}
-                aria-label={`Navigate to ${item.label || item.id.replace('#', '') || 'home'} section`}
-              >
-                {item.icon}
-              </a>
-
-              {/* Tooltip showing the name */}
-              <AnimatePresence>
-                {hoveredItem === item.id && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10, scale: 0.8 }}
-                    animate={{ opacity: 1, y: -5, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute left-1/2 transform -translate-x-1/2 -top-9 xs:-top-10 sm:-top-11 whitespace-nowrap"
-                  >
-                    <div className="bg-gray-900 text-white text-xs xs:text-sm px-2 xs:px-2.5 py-1 xs:py-1.5 rounded shadow-lg border border-gray-700">
-                      {item.label}
-                    </div>
-                    <div className="w-2 h-2 xs:w-2.5 xs:h-2.5 bg-gray-900 rotate-45 absolute left-1/2 transform -translate-x-1/2 -bottom-1 xs:-bottom-1.5 border-r border-b border-gray-700"></div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.li>
-          ))}
-
+          {/* Animated background glow */}
+          <motion.div
+            className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D4AF37]/10 via-[#FFD700]/10 to-[#D4AF37]/10 opacity-0"
+            animate={{ opacity: showSocials ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          />
+          
           {/* Social media toggle button */}
-          <motion.li layout className="relative">
-            <button
+          <motion.div layout className="relative">
+            <motion.button
               onClick={() => {
                 toggleSocials();
                 // For mobile, toggle tooltip visibility on click
@@ -176,106 +211,112 @@ const Header = () => {
               onMouseLeave={() => !isMobile && setHoveredItem(null)}
               onFocus={() => setHoveredItem("socials")}
               onBlur={() => !isMobile && setHoveredItem(null)}
-              className={`p-2 xs:p-2.5 sm:p-3 md:p-3.5 lg:p-4 rounded-full flex items-center justify-center transition-all duration-300
-                        hover:text-white hover:scale-110 transform-gpu text-lg xs:text-xl sm:text-xl md:text-2xl group
+              className={`p-3 xs:p-3.5 sm:p-4 md:p-4.5 lg:p-5 rounded-full flex items-center justify-center transition-all duration-500
+                        hover:text-white hover:scale-110 transform-gpu text-lg xs:text-xl sm:text-xl md:text-2xl group relative overflow-hidden
                         ${showSocials
-                  ? "text-purple-400 bg-[#1a1a1a] border border-purple-500/50 scale-105 rotate-45"
-                  : "text-gray-300 hover:bg-[#1a1a1a]"}`}
+                  ? "text-[#D4AF37] bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border-2 border-[#D4AF37]/60 scale-105 rotate-12 shadow-2xl shadow-[#D4AF37]/40"
+                  : "text-[#D4AF37] hover:bg-gradient-to-br hover:from-[#1a1a1a] hover:to-[#2a2a2a] border-2 border-[#D4AF37]/30 hover:border-[#D4AF37]/60"}`}
               aria-label="Toggle social links"
               aria-expanded={showSocials}
+              whileHover={{ 
+                scale: 1.1,
+                rotate: showSocials ? 12 : 5,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{ scale: 0.9 }}
             >
-              <img
+              {/* Button background glow effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20 opacity-0"
+                animate={{ opacity: showSocials ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              
+              {/* Pulsing ring effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-[#D4AF37]/40"
+                animate={{ 
+                  scale: showSocials ? [1, 1.2, 1] : 1,
+                  opacity: showSocials ? [0.5, 0, 0.5] : 0
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: showSocials ? Infinity : 0,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              <motion.img
                 src={resumelogo}
                 alt="Resume Logo"
-                className="h-6 w-6 xs:h-7 xs:w-7 sm:h-8 sm:w-8 md:h-9 md:w-9
-                  object-contain filter animate-pulse-glow
-                  transition-all duration-300 ease-in-out
-                  group-hover:brightness-125 group-hover:drop-shadow-[0_0_8px_rgba(147,51,234,0.9)]
-                  rounded-full p-0.5 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-blue-500/30
+                className="h-7 w-7 xs:h-8 xs:w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 relative z-10
+                  object-contain filter
+                  transition-all duration-500 ease-in-out
+                  group-hover:brightness-125 group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)]
+                  rounded-full p-1 bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20
                   hover:scale-110 transform-gpu"
+                animate={{ 
+                  rotate: showSocials ? 360 : 0,
+                  scale: showSocials ? 1.1 : 1
+                }}
+                transition={{ 
+                  rotate: { duration: 0.5 },
+                  scale: { duration: 0.3 }
+                }}
               />
-            </button>
+              
+              {/* Sparkle effect */}
+              <motion.div
+                className="absolute -top-1 -right-1 w-3 h-3 bg-[#FFD700] rounded-full opacity-0"
+                animate={{ 
+                  opacity: showSocials ? [0, 1, 0] : 0,
+                  scale: [0, 1, 0]
+                }}
+                transition={{ 
+                  duration: 1.5,
+                  repeat: showSocials ? Infinity : 0,
+                  delay: 0.5
+                }}
+              />
+            </motion.button>
 
-            {/* Tooltip showing the name */}
+            {/* Enhanced tooltip */}
             <AnimatePresence>
               {hoveredItem === "socials" && (
                 <motion.div
                   initial={{ opacity: 0, y: -10, scale: 0.8 }}
                   animate={{ opacity: 1, y: -5, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.8 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute left-1/2 transform -translate-x-1/2 -top-9 xs:-top-10 sm:-top-11 whitespace-nowrap"
+                  transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
+                  className="absolute left-1/2 transform -translate-x-1/2 -top-12 xs:-top-14 sm:-top-16 whitespace-nowrap z-20"
                 >
-                  <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white text-xs xs:text-sm px-2 xs:px-2.5 py-1 xs:py-1.5 rounded shadow-lg border border-purple-500/30">
-                    Social Links
-                  </div>
-                  <div className="w-2 h-2 xs:w-2.5 xs:h-2.5 bg-gray-900 rotate-45 absolute left-1/2 transform -translate-x-1/2 -bottom-1 xs:-bottom-1.5 border-r border-b border-purple-500/30"></div>
+                  <motion.div 
+                    className="bg-gradient-to-r from-[#111111] via-[#1a1a1a] to-[#111111] text-[#D4AF37] text-xs xs:text-sm px-3 xs:px-4 py-2 xs:py-2.5 rounded-xl shadow-2xl border border-[#D4AF37]/40 backdrop-blur-sm"
+                    animate={{ 
+                      boxShadow: [
+                        "0 0 0px rgba(212,175,55,0.3)",
+                        "0 0 20px rgba(212,175,55,0.4)",
+                        "0 0 0px rgba(212,175,55,0.3)"
+                      ]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <span className="font-semibold">Connect With Me</span>
+                  </motion.div>
+                  <div className="w-3 h-3 xs:w-3.5 xs:h-3.5 bg-[#111111] rotate-45 absolute left-1/2 transform -translate-x-1/2 -bottom-1.5 xs:-bottom-2 border-r border-b border-[#D4AF37]/40"></div>
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.li>
-        </motion.ul>
+          </motion.div>
+        </motion.div>
 
-        {/* Social media icons */}
-        <AnimatePresence>
-          {showSocials && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="absolute -top-16 xs:-top-18 sm:-top-20 md:-top-22 left-0 right-0 mx-auto w-fit"
-              onClick={(e) => {
-                // Prevent event propagation to avoid toggling blur effect
-                e.stopPropagation();
-              }}
-            >
-              <div
-                className="flex items-center justify-center flex-wrap gap-2 xs:gap-2.5 sm:gap-3 md:gap-3.5 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-blue-500/30 backdrop-blur-xl p-2.5 xs:p-3 sm:p-3.5 md:p-4 rounded-full border border-white/20 shadow-lg shadow-black/30"
-                onClick={(e) => {
-                  // Prevent event propagation to avoid toggling blur effect
-                  e.stopPropagation();
-                }}
-              >
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      // Prevent event propagation to avoid toggling blur effect
-                      e.stopPropagation();
-                    }}
-                    className={`
-                      ${link.bgColor || "bg-gray-800"}
-                      ${link.textColor || "text-white"}
-                      h-10 w-10 xs:h-11 xs:w-11 sm:h-12 sm:w-12 md:h-12 md:w-12 lg:h-13 lg:w-13 rounded-full shadow-md
-                      flex items-center justify-center
-                      transition-all duration-200
-                      transform hover:scale-110 hover:shadow-lg
-                      border-2 ${link.borderColor || "border-transparent"}
-                      ${link.hoverBgColor || "hover:bg-gray-700"}
-                      group overflow-hidden relative social-icon-hover
-                    `}
-                    title={link.label}
-                    aria-label={link.label}
-                  >
-                    {/* Animated background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 transition-opacity duration-300"></div>
-
-                    {/* Icon */}
-                    <span className="relative z-10 text-lg xs:text-xl sm:text-xl md:text-2xl">
-                      <SocialIcon iconName={link.iconName} />
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
     </motion.nav>
+    </>
   );
 };
 

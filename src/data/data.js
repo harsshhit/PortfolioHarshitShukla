@@ -49,23 +49,13 @@ export const socialLinks = [
     url: "https://leetcode.com/harshh8/",
     iconName: "FaCode",
     label: "LeetCode",
-    bgColor: "bg-blue-400",
+    bgColor: "bg-yellow-400",
     textColor: "text-black",
     borderColor: "border-blue-300",
     hoverBgColor: "hover:bg-blue-300",
     hoverBorderColor: "hover:border-white",
-  },
-  {
-    id: "devto",
-    url: "https://dev.to/your-devto-username",
-    iconName: "FaDev",
-    label: "Dev.to",
-    bgColor: "bg-black",
-    textColor: "text-white",
-    borderColor: "border-gray-700",
-    hoverBgColor: "hover:bg-gray-700",
-    hoverBorderColor: "hover:border-white",
-  },
+  }
+ 
 ];
 
 export const projectsData = [
