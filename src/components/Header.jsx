@@ -183,7 +183,7 @@ const Header = () => {
         }}
       >
         <motion.div
-          className={`flex items-center justify-center bg-gradient-to-r from-[#111111]/95 via-[#111111]/98 to-[#111111]/95 rounded-full p-3 xs:p-3.5 sm:p-4 md:p-4.5 backdrop-blur-xl
+          className={`flex items-center justify-center bg-gradient-to-r from-[#111111]/95 via-[#111111]/98 to-[#111111]/95 rounded-full p-2.5 xs:p-3 sm:p-3.5 md:p-2 backdrop-blur-xl
                     border ${showSocials ? 'border-[#D4AF37]/60' : 'border-[#D4AF37]/20'} shadow-2xl ${showSocials ? 'shadow-[#D4AF37]/30' : 'shadow-black/40'} transition-all duration-500 overflow-visible
                     ${showSocials ? 'ring-4 ring-[#D4AF37]/20' : ''}`}
           layout
@@ -211,8 +211,8 @@ const Header = () => {
               onMouseLeave={() => !isMobile && setHoveredItem(null)}
               onFocus={() => setHoveredItem("socials")}
               onBlur={() => !isMobile && setHoveredItem(null)}
-              className={`p-3 xs:p-3.5 sm:p-4 md:p-4.5 lg:p-5 rounded-full flex items-center justify-center transition-all duration-500
-                        hover:text-white hover:scale-110 transform-gpu text-lg xs:text-xl sm:text-xl md:text-2xl group relative overflow-hidden
+              className={`p-2.5 xs:p-3 sm:p-3.5 md:p-2 lg:p-2 rounded-full flex items-center justify-center transition-all duration-500
+                        hover:text-white hover:scale-110 transform-gpu text-sm xs:text-base sm:text-lg md:text-lg group relative overflow-hidden
                         ${showSocials
                   ? "text-[#D4AF37] bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border-2 border-[#D4AF37]/60 scale-105 rotate-12 shadow-2xl shadow-[#D4AF37]/40"
                   : "text-[#D4AF37] hover:bg-gradient-to-br hover:from-[#1a1a1a] hover:to-[#2a2a2a] border-2 border-[#D4AF37]/30 hover:border-[#D4AF37]/60"}`}
@@ -249,11 +249,11 @@ const Header = () => {
               <motion.img
                 src={resumelogo}
                 alt="Resume Logo"
-                className="h-7 w-7 xs:h-8 xs:w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 relative z-10
+                className="h-5 w-5 xs:h-6 xs:w-6 sm:h-7 sm:w-7 md:h-6 md:w-6 relative z-10
                   object-contain filter
                   transition-all duration-500 ease-in-out
                   group-hover:brightness-125 group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)]
-                  rounded-full p-1 bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20
+                  rounded-full p-0.5 bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20
                   hover:scale-110 transform-gpu"
                 animate={{ 
                   rotate: showSocials ? 360 : 0,
