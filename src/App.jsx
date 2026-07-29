@@ -2,18 +2,16 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import BlurredContentArea from "./components/BlurredContentArea";
-import BlurOverlay from "./components/BlurOverlay";
+import CustomCursor from "./components/CustomCursor";
 import { HeaderProvider } from "./context/HeaderContext";
 
-// Error Boundary Component
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
@@ -24,71 +22,111 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="error-boundary p-3 sm:p-4 mx-3 sm:m-4 bg-red-900/20 border border-red-500 rounded-lg text-center">
-          <h2 className="text-lg sm:text-xl font-bold mb-2">Something went wrong</h2>
-          <p className="mb-3 sm:mb-4 text-sm sm:text-base">Please refresh the page or try again later</p>
+        <div style={{
+          padding: '2rem',
+          margin: '2rem',
+          background: 'rgba(232,131,74,0.05)',
+          border: '1px solid rgba(232,131,74,0.3)',
+          borderRadius: '8px',
+          textAlign: 'center',
+          color: '#F2F2F0',
+          fontFamily: 'DM Sans, sans-serif'
+        }}>
+          <h2 style={{ marginBottom: '0.5rem' }}>Something went wrong</h2>
+          <p style={{ marginBottom: '1rem' }}>Please refresh the page or try again later.</p>
           <button
             onClick={() => this.setState({ hasError: false })}
-            className="px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            style={{
+              padding: '0.5rem 1.25rem',
+              background: 'transparent',
+              border: '1px solid #E8834A',
+              color: '#E8834A',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontFamily: 'DM Sans, sans-serif'
+            }}
           >
             Try again
           </button>
         </div>
       );
     }
-
     return this.props.children;
   }
 }
 
-// Loading component with animation
 const LoadingSpinner = () => (
-  <div className="flex justify-center items-center py-8 sm:py-12">
-    <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-t-2 border-b-2 border-blue-500"></div>
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '5rem',
+    minHeight: '30vh'
+  }}>
+    <div style={{
+      width: '32px',
+      height: '32px',
+      border: '2px solid rgba(232,131,74,0.15)',
+      borderTop: '2px solid #E8834A',
+      borderRadius: '50%',
+      animation: 'spin 0.8s linear infinite'
+    }} />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
   </div>
 );
 
-// Lazy load components with prefetching
 const Skills = lazy(() => import("./components/Skills"));
 const Projects = lazy(() => import("./components/Projects"));
 const Resume = lazy(() => import("./components/Resume"));
 const Contact = lazy(() => import("./components/Contact"));
 const Experience = lazy(() => import("./components/Experience"));
 
-// Prefetch components after initial load
 const prefetchComponents = () => {
-  const prefetchComponent = (importFn) => {
-    try {
-      importFn();
-    } catch (e) {
-      console.error("Prefetch error:", e);
-    }
-  };
-
-  // Prefetch after a delay to prioritize initial render
+  const prefetch = (fn) => { try { fn(); } catch (e) {} };
   setTimeout(() => {
-    prefetchComponent(() => import("./components/Skills"));
-    prefetchComponent(() => import("./components/Experience"));
-    prefetchComponent(() => import("./components/Projects"));
-    prefetchComponent(() => import("./components/Resume"));
-    prefetchComponent(() => import("./components/Contact"));
-  }, 2000);
+    prefetch(() => import("./components/Skills"));
+    prefetch(() => import("./components/Experience"));
+    prefetch(() => import("./components/Projects"));
+    prefetch(() => import("./components/Resume"));
+    prefetch(() => import("./components/Contact"));
+  }, 2500);
 };
 
 function App() {
-  // Trigger prefetching after initial render
   useEffect(() => {
+    let lenis;
+    import("lenis").then(({ default: Lenis }) => {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+        smoothTouch: false,
+      });
+
+      const raf = (time) => {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      };
+      requestAnimationFrame(raf);
+    }).catch(() => {
+      // falls back to native scroll if Lenis fails to load
+    });
+
     prefetchComponents();
+
+    return () => {
+      if (lenis) lenis.destroy();
+    };
   }, []);
 
   return (
     <Router>
       <HeaderProvider>
-        <div className="App w-full overflow-x-hidden">
-          <BlurOverlay />
+        <div className="App w-full overflow-x-hidden" style={{ background: 'var(--bg-base)' }}>
+          <CustomCursor />
           <Header />
-          <Hero />
-          <BlurredContentArea>
+          <main>
+            <Hero />
             <ErrorBoundary>
               <Suspense fallback={<LoadingSpinner />}>
                 <Skills />
@@ -114,7 +152,7 @@ function App() {
                 <Contact />
               </Suspense>
             </ErrorBoundary>
-          </BlurredContentArea>
+          </main>
         </div>
       </HeaderProvider>
     </Router>

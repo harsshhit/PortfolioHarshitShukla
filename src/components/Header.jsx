@@ -1,166 +1,200 @@
 import { useState, useEffect } from "react";
-import { FaGithub, FaTwitter, FaLinkedin, FaCode, FaDev } from "react-icons/fa";
+import { FaGithub, FaTwitter, FaLinkedin, FaCode } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useHeaderContext } from "../context/HeaderContext";
 import { socialLinks } from "../data/data";
-import resumelogo from "../assets/resumelogo2svg.png";
+
+const IconMap = { FaGithub, FaTwitter, FaLinkedin, FaCode };
+
+const NAV_LINKS = [
+  { href: "#home",       label: "Home" },
+  { href: "#skills",     label: "Skills" },
+  { href: "#experience", label: "Experience" },
+  { href: "#projects",   label: "Projects" },
+  { href: "#contact",    label: "Contact" },
+];
 
 const Header = () => {
-  const [showSocials, setShowSocials] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const { toggleHeaderActive, setSocialsVisible } = useHeaderContext();
 
-  // Check if viewport is mobile sized
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Apply blur effect when component mounts and sync with context
   useEffect(() => {
-    // Sync the showSocials state with the context when component mounts
-    setSocialsVisible(showSocials);
+    setSocialsVisible(showMenu);
+    return () => { toggleHeaderActive(false); setSocialsVisible(false); };
+  }, [toggleHeaderActive, setSocialsVisible, showMenu]);
 
-    return () => {
-      // Clean up by removing blur effect when component unmounts
-      toggleHeaderActive(false);
-      setSocialsVisible(false);
+  useEffect(() => {
+    const handler = () => {
+      const sections = NAV_LINKS.map(l => l.href.replace("#", ""));
+      for (const id of [...sections].reverse()) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 120) {
+          setActiveSection(id);
+          return;
+        }
+      }
+      setActiveSection("home");
     };
-  }, [toggleHeaderActive, setSocialsVisible, showSocials]);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
-  // Toggle social media visibility
-  const toggleSocials = () => {
-    const newSocialsState = !showSocials;
-    setShowSocials(newSocialsState);
-    // Update context with social visibility state
-    setSocialsVisible(newSocialsState);
-    // Always set isHeaderActive to true when resumelogo button is clicked
-    // This ensures the background is always blurred when social icons are toggled
-    toggleHeaderActive(newSocialsState);
-  };
-
-  // Social media icon component
-  const SocialIcon = ({ iconName }) => {
-    const icons = {
-      FaGithub: <FaGithub />,
-      FaTwitter: <FaTwitter />,
-      FaLinkedin: <FaLinkedin />,
-      FaCode: <FaCode />,
-      FaDev: <FaDev />,
-    };
-
-    return icons[iconName] || null;
+  const toggleMenu = () => {
+    const next = !showMenu;
+    setShowMenu(next);
+    setSocialsVisible(next);
+    toggleHeaderActive(next);
   };
 
   return (
     <>
-      {/* Full-page social media overlay */}
       <AnimatePresence>
-        {showSocials && (
+        {showMenu && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-gradient-to-br from-[#111111]/95 via-[#0a0a0a]/98 to-[#111111]/95 backdrop-blur-xl z-[100] flex items-center justify-center"
-            onClick={() => setShowSocials(false)}
+            transition={{ duration: 0.25 }}
+            onClick={() => setShowMenu(false)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(8,8,8,0.97)",
+              backdropFilter: "blur(20px)",
+              zIndex: 200,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
           >
-            {/* Close button */}
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-              onClick={() => setShowSocials(false)}
-              className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-[#D4AF37] hover:text-[#FFD700] text-3xl font-bold transition-colors duration-300 z-[110]"
-              aria-label="Close social links"
-            >
-              ✕
-            </motion.button>
-
-            {/* Social icons container */}
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 50, scale: 0.8 }}
-              transition={{ delay: 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
-              className="flex flex-col items-center justify-center space-y-8 p-8"
+            <motion.nav
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.1, duration: 0.35 }}
               onClick={(e) => e.stopPropagation()}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "0.5rem",
+                marginBottom: "3rem",
+              }}
             >
-              {/* Title */}
-              <motion.h2
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="text-4xl md:text-5xl font-bold text-[#D4AF37] mb-4 text-center"
-              >
-                Connect With Me
-              </motion.h2>
+              {NAV_LINKS.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 + i * 0.07 }}
+                  onClick={() => setShowMenu(false)}
+                  data-magnetic
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontSize: "clamp(2rem, 6vw, 3.5rem)",
+                    fontWeight: 800,
+                    letterSpacing: "-0.03em",
+                    color: activeSection === link.href.replace("#", "") ? "var(--accent)" : "var(--text-primary)",
+                    textDecoration: "none",
+                    padding: "0.2em 0.6em",
+                    minHeight: "48px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    transition: "color 0.2s ease",
+                    lineHeight: 1.15,
+                    touchAction: "manipulation",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = "var(--accent)"; }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color =
+                      activeSection === link.href.replace("#", "") ? "var(--accent)" : "var(--text-primary)";
+                  }}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </motion.nav>
 
-              {/* Social icons grid */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
-                {socialLinks.map((link, index) => (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ display: "flex", gap: "1rem" }}
+            >
+              {socialLinks.map((link, i) => {
+                const Icon = IconMap[link.iconName];
+                return (
                   <motion.a
                     key={link.id}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ 
-                      delay: 0.4 + (index * 0.1), 
-                      duration: 0.4,
-                      type: "spring",
-                      stiffness: 100
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.55 + i * 0.07 }}
+                    data-magnetic
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "10px",
+                      background: "var(--bg-elevated)",
+                      border: "1px solid var(--border)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "var(--text-secondary)",
+                      fontSize: "1.1rem",
+                      transition: "all 0.2s ease",
+                      textDecoration: "none",
+                      touchAction: "manipulation",
                     }}
-                    whileHover={{ 
-                      scale: 1.1, 
-                      y: -5,
-                      transition: { duration: 0.2 }
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(232,131,74,0.1)";
+                      e.currentTarget.style.borderColor = "rgba(232,131,74,0.4)";
+                      e.currentTarget.style.color = "var(--accent)";
                     }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`
-                      ${link.bgColor || "bg-[#1a1a1a]"}
-                      ${link.textColor || "text-white"}
-                      w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-3xl shadow-2xl
-                      flex flex-col items-center justify-center
-                      transition-all duration-300
-                      border-2 ${link.borderColor || "border-[#D4AF37]/30"}
-                      ${link.hoverBgColor || "hover:bg-[#2a2a2a]"}
-                      hover:border-[#D4AF37]/60
-                      group overflow-hidden relative
-                      backdrop-blur-sm
-                    `}
-                    title={link.label}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "var(--bg-elevated)";
+                      e.currentTarget.style.borderColor = "var(--border)";
+                      e.currentTarget.style.color = "var(--text-secondary)";
+                    }}
                     aria-label={link.label}
                   >
-                    {/* Animated background */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-br from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20 transition-opacity duration-300"></div>
-
-                    {/* Icon */}
-                    <span className="relative z-10 text-2xl md:text-3xl lg:text-4xl mb-1">
-                      <SocialIcon iconName={link.iconName} />
-                    </span>
-                    
-                    {/* Label */}
-                    <span className="relative z-10 text-xs md:text-sm font-medium text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                      {link.label}
-                    </span>
+                    {Icon && <Icon />}
                   </motion.a>
-                ))}
-              </div>
-
-            
+                );
+              })}
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              style={{
+                position: "absolute",
+                bottom: "2.5rem",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.72rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--text-tertiary)",
+              }}
+            >
+              Tap anywhere to close
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -168,154 +202,136 @@ const Header = () => {
       <motion.nav
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed bottom-5 xs:bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-1/2 transform -translate-x-1/2 z-[60] w-fit"
-        onMouseLeave={() => setHoveredItem(null)}
-        onBlur={() => setHoveredItem(null)}
-      >
-      {/* Social media toggle button container */}
-      <motion.div
-        className="relative flex items-center justify-center w-full"
-        layout
+        transition={{ duration: 0.5, delay: 0.3 }}
         style={{
-          filter: showSocials ? 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.3))' : 'none',
-          transition: 'filter 0.3s ease-in-out'
+          position: "fixed",
+          bottom: "clamp(1.25rem, 3vw, 2rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 100,
         }}
+        onMouseLeave={() => setHoveredItem(null)}
       >
-        <motion.div
-          className={`flex items-center justify-center bg-gradient-to-r from-[#111111]/95 via-[#111111]/98 to-[#111111]/95 rounded-full p-2.5 xs:p-3 sm:p-3.5 md:p-2 backdrop-blur-xl
-                    border ${showSocials ? 'border-[#D4AF37]/60' : 'border-[#D4AF37]/20'} shadow-2xl ${showSocials ? 'shadow-[#D4AF37]/30' : 'shadow-black/40'} transition-all duration-500 overflow-visible
-                    ${showSocials ? 'ring-4 ring-[#D4AF37]/20' : ''}`}
-          layout
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.25rem",
+            padding: "0.5rem",
+            background: "rgba(15,15,15,0.92)",
+            backdropFilter: "blur(20px)",
+            border: `1px solid ${showMenu ? "rgba(232,131,74,0.4)" : "rgba(255,255,255,0.07)"}`,
+            borderRadius: "999px",
+            boxShadow: showMenu
+              ? "0 0 30px rgba(232,131,74,0.15), 0 8px 32px rgba(0,0,0,0.4)"
+              : "0 8px 32px rgba(0,0,0,0.4)",
+            transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+          }}
         >
-          {/* Animated background glow */}
-          <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D4AF37]/10 via-[#FFD700]/10 to-[#D4AF37]/10 opacity-0"
-            animate={{ opacity: showSocials ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-          
-          {/* Social media toggle button */}
-          <motion.div layout className="relative">
-            <motion.button
-              onClick={() => {
-                toggleSocials();
-                // For mobile, toggle tooltip visibility on click
-                if (isMobile) {
-                  setHoveredItem(hoveredItem === "socials" ? null : "socials");
-                }
-              }}
-              onMouseEnter={() => setHoveredItem("socials")}
-              onMouseLeave={() => !isMobile && setHoveredItem(null)}
-              onFocus={() => setHoveredItem("socials")}
-              onBlur={() => !isMobile && setHoveredItem(null)}
-              className={`p-2.5 xs:p-3 sm:p-3.5 md:p-2 lg:p-2 rounded-full flex items-center justify-center transition-all duration-500
-                        hover:text-white hover:scale-110 transform-gpu text-sm xs:text-base sm:text-lg md:text-lg group relative overflow-hidden
-                        ${showSocials
-                  ? "text-[#D4AF37] bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] border-2 border-[#D4AF37]/60 scale-105 rotate-12 shadow-2xl shadow-[#D4AF37]/40"
-                  : "text-[#D4AF37] hover:bg-gradient-to-br hover:from-[#1a1a1a] hover:to-[#2a2a2a] border-2 border-[#D4AF37]/30 hover:border-[#D4AF37]/60"}`}
-              aria-label="Toggle social links"
-              aria-expanded={showSocials}
-              whileHover={{ 
-                scale: 1.1,
-                rotate: showSocials ? 12 : 5,
-                transition: { duration: 0.2 }
-              }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {/* Button background glow effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20 opacity-0"
-                animate={{ opacity: showSocials ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-              />
-              
-              {/* Pulsing ring effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-[#D4AF37]/40"
-                animate={{ 
-                  scale: showSocials ? [1, 1.2, 1] : 1,
-                  opacity: showSocials ? [0.5, 0, 0.5] : 0
+          {!isMobile && NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.href.replace("#", "");
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className="nav-link"
+                onMouseEnter={() => setHoveredItem(link.href)}
+                onMouseLeave={() => setHoveredItem(null)}
+                style={{
+                  padding: "0.45rem 0.9rem",
+                  borderRadius: "999px",
+                  background: isActive ? "rgba(232,131,74,0.1)" : "transparent",
+                  color: isActive ? "var(--accent)" : "var(--text-tertiary)",
+                  border: "none",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "0.8rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.04em",
+                  transition: "all 0.2s ease",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
                 }}
-                transition={{ 
-                  duration: 2,
-                  repeat: showSocials ? Infinity : 0,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              <motion.img
-                src={resumelogo}
-                alt="Resume Logo"
-                className="h-5 w-5 xs:h-6 xs:w-6 sm:h-7 sm:w-7 md:h-6 md:w-6 relative z-10
-                  object-contain filter
-                  transition-all duration-500 ease-in-out
-                  group-hover:brightness-125 group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)]
-                  rounded-full p-0.5 bg-gradient-to-r from-[#D4AF37]/20 via-[#FFD700]/20 to-[#D4AF37]/20
-                  hover:scale-110 transform-gpu"
-                animate={{ 
-                  rotate: showSocials ? 360 : 0,
-                  scale: showSocials ? 1.1 : 1
-                }}
-                transition={{ 
-                  rotate: { duration: 0.5 },
-                  scale: { duration: 0.3 }
-                }}
-              />
-              
-              {/* Sparkle effect */}
-              <motion.div
-                className="absolute -top-1 -right-1 w-3 h-3 bg-[#FFD700] rounded-full opacity-0"
-                animate={{ 
-                  opacity: showSocials ? [0, 1, 0] : 0,
-                  scale: [0, 1, 0]
-                }}
-                transition={{ 
-                  duration: 1.5,
-                  repeat: showSocials ? Infinity : 0,
-                  delay: 0.5
-                }}
-              />
-            </motion.button>
+                onFocus={() => setHoveredItem(link.href)}
+                onBlur={() => setHoveredItem(null)}
+              >
+                {link.label}
+              </a>
+            );
+          })}
 
-            {/* Enhanced tooltip */}
-            <AnimatePresence>
-              {hoveredItem === "socials" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10, scale: 0.8 }}
-                  animate={{ opacity: 1, y: -5, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.8 }}
-                  transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
-                  className="absolute left-1/2 transform -translate-x-1/2 -top-12 xs:-top-14 sm:-top-16 whitespace-nowrap z-20"
-                >
-                  <motion.div 
-                    className="bg-gradient-to-r from-[#111111] via-[#1a1a1a] to-[#111111] text-[#D4AF37] text-xs xs:text-sm px-3 xs:px-4 py-2 xs:py-2.5 rounded-xl shadow-2xl border border-[#D4AF37]/40 backdrop-blur-sm"
-                    animate={{ 
-                      boxShadow: [
-                        "0 0 0px rgba(212,175,55,0.3)",
-                        "0 0 20px rgba(212,175,55,0.4)",
-                        "0 0 0px rgba(212,175,55,0.3)"
-                      ]
-                    }}
-                    transition={{ 
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <span className="font-semibold">Connect With Me</span>
-                  </motion.div>
-                  <div className="w-3 h-3 xs:w-3.5 xs:h-3.5 bg-[#111111] rotate-45 absolute left-1/2 transform -translate-x-1/2 -bottom-1.5 xs:-bottom-2 border-r border-b border-[#D4AF37]/40"></div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </motion.div>
+          {!isMobile && (
+            <div
+              style={{
+                width: "1px",
+                height: "20px",
+                background: "var(--border)",
+                margin: "0 0.25rem",
+              }}
+            />
+          )}
 
-      </motion.div>
-    </motion.nav>
+          <motion.button
+            onClick={toggleMenu}
+            onMouseEnter={() => !isMobile && setHoveredItem("menu")}
+            onMouseLeave={() => !isMobile && setHoveredItem(null)}
+            whileTap={{ scale: 0.92 }}
+            data-magnetic
+            aria-label="Toggle navigation menu"
+            aria-expanded={showMenu}
+            style={{
+              width: "44px",
+              height: "44px",
+              borderRadius: "50%",
+              background: showMenu ? "rgba(232,131,74,0.15)" : "var(--bg-elevated)",
+              border: `1px solid ${showMenu ? "rgba(232,131,74,0.5)" : "var(--border)"}`,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5px",
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+              padding: 0,
+              flexShrink: 0,
+              touchAction: "manipulation",
+            }}
+          >
+            <motion.span
+              animate={{ rotate: showMenu ? 45 : 0, y: showMenu ? 6.5 : 0 }}
+              style={{
+                display: "block",
+                width: "16px",
+                height: "1.5px",
+                background: showMenu ? "var(--accent)" : "var(--text-secondary)",
+                borderRadius: "1px",
+                transition: "background 0.2s ease",
+              }}
+            />
+            <motion.span
+              animate={{ opacity: showMenu ? 0 : 1, scaleX: showMenu ? 0 : 1 }}
+              transition={{ duration: 0.2 }}
+              style={{
+                display: "block",
+                width: "16px",
+                height: "1.5px",
+                background: showMenu ? "var(--accent)" : "var(--text-secondary)",
+                borderRadius: "1px",
+              }}
+            />
+            <motion.span
+              animate={{ rotate: showMenu ? -45 : 0, y: showMenu ? -6.5 : 0 }}
+              style={{
+                display: "block",
+                width: "16px",
+                height: "1.5px",
+                background: showMenu ? "var(--accent)" : "var(--text-secondary)",
+                borderRadius: "1px",
+                transition: "background 0.2s ease",
+              }}
+            />
+          </motion.button>
+        </div>
+      </motion.nav>
     </>
   );
 };

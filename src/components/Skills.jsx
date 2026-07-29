@@ -1,206 +1,343 @@
-import { useState, useEffect } from "react";
-import {
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaReact,
-  FaNodeJs,
-  FaGithub,
-} from "react-icons/fa";
-import {
-  SiExpress,
-  SiMongodb,
-  SiMysql,
-  SiNextdotjs,
-  SiRedux,
-} from "react-icons/si";
-import { DiDocker } from "react-icons/di";
-import { Code, Star, Server } from "lucide-react";
-import PropTypes from "prop-types";
+import { useState, useRef } from "react";
+import { motion, useInView, useReducedMotion, AnimatePresence } from "framer-motion";
 import { skillsData } from "../data/data";
 
+const CATEGORIES = [
+  {
+    id: "languages",
+    label: "Languages",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+      </svg>
+    ),
+    skills: skillsData.programmingLanguages,
+  },
+  {
+    id: "frontend",
+    label: "Frontend",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+      </svg>
+    ),
+    skills: skillsData.frontendTechnologies,
+  },
+  {
+    id: "backend",
+    label: "Backend & DB",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+      </svg>
+    ),
+    skills: skillsData.backendAndDatabase,
+  },
+  {
+    id: "tools",
+    label: "Dev Tools",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+    ),
+    skills: skillsData.developmentTools,
+  },
+  {
+    id: "testing",
+    label: "Testing",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      </svg>
+    ),
+    skills: skillsData.testingAndQuality,
+  },
+  {
+    id: "core",
+    label: "Core",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+    ),
+    skills: skillsData.coreStrengths,
+  },
+];
+
+function SkillPill({ skill, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.85, y: 10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.04, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="tag-chip"
+      style={{
+        padding: "0.45rem 0.9rem",
+        fontSize: "0.82rem",
+        minHeight: "36px",
+        display: "inline-flex",
+        alignItems: "center",
+      }}
+    >
+      {skill}
+    </motion.div>
+  );
+}
+
+function CategoryTab({ cat, isActive, onClick, index }) {
+  return (
+    <motion.button
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.07 }}
+      onClick={onClick}
+      data-magnetic
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0.5rem",
+        padding: "0.65rem 1.25rem",
+        minHeight: "44px",
+        borderRadius: "6px",
+        border: isActive ? "1px solid rgba(232,131,74,0.5)" : "1px solid var(--border)",
+        background: isActive ? "rgba(232,131,74,0.08)" : "var(--bg-elevated)",
+        color: isActive ? "var(--accent)" : "var(--text-secondary)",
+        fontFamily: "'DM Sans', sans-serif",
+        fontSize: "0.85rem",
+        fontWeight: 500,
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        position: "relative",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        flexShrink: 0,
+        touchAction: "manipulation",
+      }}
+    >
+      <span style={{ opacity: isActive ? 1 : 0.6, color: isActive ? "var(--accent)" : "inherit" }}>
+        {cat.icon}
+      </span>
+      {cat.label}
+      {isActive && (
+        <motion.div
+          layoutId="active-tab"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(232,131,74,0.05)",
+            borderRadius: "inherit",
+          }}
+          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+        />
+      )}
+    </motion.button>
+  );
+}
+
 function Skills() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
+  const [active, setActive] = useState("languages");
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const prefersReducedMotion = useReducedMotion();
 
-  // Create skill categories for slider
-  const skillCategories = [
-    {
-      id: 1,
-      title: "Programming Languages",
-      skills: skillsData.programmingLanguages,
-      icon: <Code className="text-blue-400 w-8 h-8" />
-    },
-    {
-      id: 2,
-      title: "Frontend Technologies",
-      skills: skillsData.frontendTechnologies,
-      icon: <Code className="text-blue-400 w-8 h-8" />
-    },
-    {
-      id: 3,
-      title: "Backend & Database",
-      skills: skillsData.backendAndDatabase,
-      icon: <Server className="text-blue-400 w-8 h-8" />
-    },
-    {
-      id: 4,
-      title: "Development Tools",
-      skills: skillsData.developmentTools,
-      icon: <Star className="text-blue-400 w-8 h-8" />
-    },
-    {
-      id: 5,
-      title: "Testing & Quality",
-      skills: skillsData.testingAndQuality,
-      icon: <Star className="text-blue-400 w-8 h-8" />
-    },
-    {
-      id: 6,
-      title: "Core Strengths",
-      skills: skillsData.coreStrengths,
-      icon: <Star className="text-blue-400 w-8 h-8" />
-    }
-  ];
-
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === skillCategories.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === skillCategories.length - 1 ? 0 : prevIndex + 1
-    );
-    setIsAutoPlaying(false);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? skillCategories.length - 1 : prevIndex - 1
-    );
-    setIsAutoPlaying(false);
-  };
-
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-    setIsAutoPlaying(false);
-  };
-
-  // Touch handlers
-  const handleTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      nextSlide();
-    } else if (isRightSwipe) {
-      prevSlide();
-    }
-  };
+  const activeCategory = CATEGORIES.find((c) => c.id === active);
 
   return (
-    <div
+    <section
       id="skills"
-      className="relative  bg-black text-white py-16 md:py-32 flex justify-center items-center overflow-hidden"
+      ref={sectionRef}
+      className="section"
+      style={{ background: "var(--bg-base)", position: "relative", overflow: "hidden" }}
     >
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: "radial-gradient(circle at 20% 80%, rgba(232,131,74,0.04) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(232,131,74,0.03) 0%, transparent 50%)",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="container mx-auto relative z-10 px-6">
-        {/* Heading */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white flex items-center justify-center gap-2 md:gap-4">
-            Skills & Expertise
-           </h2>
-          <p className="text-gray-300 mt-2 md:mt-4 max-w-2xl mx-auto text-sm md:text-base px-4">
-            My technical skills and expertise across different domains
-          </p>
-        </div>
-
-        {/* Skills Slider */}
-        <div className="relative">
-          <div 
-            className="overflow-hidden"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <motion.div
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          style={{ marginBottom: "2.5rem" }}
+        >
+          <span className="section-label">Expertise</span>
+          <h2 className="section-heading">Skills & Stack</h2>
+          <p
+            style={{
+              marginTop: "0.75rem",
+              color: "var(--text-secondary)",
+              fontSize: "clamp(0.9rem, 1.6vw, 1rem)",
+              maxWidth: "500px",
+            }}
           >
-            <div 
-              className="flex transition-transform duration-700 ease-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            Technologies I work with across the full development spectrum.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          style={{
+            display: "flex",
+            gap: "0.6rem",
+            marginBottom: "2rem",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
+            paddingBottom: "0.5rem",
+            scrollbarWidth: "none",
+          }}
+        >
+          {CATEGORIES.map((cat, i) => (
+            <CategoryTab
+              key={cat.id}
+              cat={cat}
+              isActive={active === cat.id}
+              onClick={() => setActive(cat.id)}
+              index={i}
+            />
+          ))}
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: prefersReducedMotion ? 0 : -8 }}
+            transition={{ duration: 0.3 }}
+            className="card-glass"
+            style={{ padding: "clamp(1.25rem, 3.5vw, 2.5rem)" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.75rem",
+                marginBottom: "1.5rem",
+                paddingBottom: "1rem",
+                borderBottom: "1px solid var(--border)",
+              }}
             >
-              {skillCategories.map((category, index) => (
-                <div key={category.id} className="w-full flex-shrink-0">
-                  <SkillSection {...category} />
-                </div>
+              <div
+                style={{
+                  padding: "0.6rem",
+                  background: "rgba(232,131,74,0.1)",
+                  borderRadius: "8px",
+                  color: "var(--accent)",
+                  display: "flex",
+                }}
+              >
+                {activeCategory?.icon}
+              </div>
+              <div>
+                <h3
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontSize: "1.2rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
+                    margin: 0,
+                  }}
+                >
+                  {activeCategory?.label}
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.78rem",
+                    color: "var(--text-tertiary)",
+                    margin: 0,
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {activeCategory?.skills.length} technologies
+                </p>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.6rem",
+              }}
+            >
+              {activeCategory?.skills.map((skill, i) => (
+                <SkillPill key={skill} skill={skill} index={i} />
               ))}
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+          </motion.div>
+        </AnimatePresence>
 
-function SkillSection({ title, skills, icon }) {
-  return (
-    <div className="w-full max-w-4xl mx-auto px-4">
-      <div className="bg-gradient-to-br from-black/80 to-black/60 backdrop-blur-sm border-2 border-blue-500/30 rounded-2xl overflow-hidden shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 hover:border-blue-500/50">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent" />
-        
-        <div className="p-8 md:p-12 relative z-10">
-          <div className="flex items-center gap-6 mb-8">
-            <div className="p-4 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-xl border border-blue-500/30">
-              {icon}
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-blue-400 to-white bg-clip-text text-transparent">
-              {title}
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {skills.map((skill, index) => (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.4, duration: 0.7 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "1.25rem",
+            marginTop: "2.25rem",
+          }}
+        >
+          {[
+            { label: "Frontend", pct: 92 },
+            { label: "Backend", pct: 78 },
+            { label: "DevOps", pct: 60 },
+            { label: "Problem Solving", pct: 88 },
+          ].map(({ label, pct }, i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -16 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: 0.5 + i * 0.1 }}
+            >
               <div
-                key={index}
-                className="flex items-center gap-4 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 hover:border-blue-500/30 transition-all duration-300 hover:bg-blue-500/10"
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "0.4rem",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "0.8rem",
+                }}
               >
-                <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
-                <span className="text-gray-300 text-lg font-medium">{skill}</span>
+                <span style={{ color: "var(--text-secondary)" }}>{label}</span>
+                <span style={{ color: "var(--accent)", fontWeight: 600 }}>{pct}%</span>
               </div>
-            ))}
-          </div>
-        </div>
+              <div
+                style={{
+                  height: "4px",
+                  background: "var(--bg-elevated)",
+                  borderRadius: "2px",
+                  overflow: "hidden",
+                }}
+              >
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={isInView ? { width: `${pct}%` } : { width: 0 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 1.2, delay: 0.6 + i * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  style={{
+                    height: "100%",
+                    background: "linear-gradient(90deg, var(--accent-dim), var(--accent))",
+                    borderRadius: "2px",
+                    boxShadow: "0 0 8px rgba(232,131,74,0.4)",
+                  }}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
-
-SkillSection.propTypes = {
-  title: PropTypes.string.isRequired,
-  skills: PropTypes.arrayOf(PropTypes.string).isRequired,
-  icon: PropTypes.node.isRequired,
-};
 
 export default Skills;

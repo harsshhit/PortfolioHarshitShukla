@@ -1,80 +1,119 @@
-import { FileText } from "lucide-react";
-import { motion } from "framer-motion";
-import resumelogo from "../assets/resumeimage.png";
-import "../index.css";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { resumeCVData } from "../data/data";
 
 function Resume() {
-  const resumeLink = resumeCVData.resumeLink;
-  const handleViewResume = () => {
-    window.open(resumeLink, "_blank");
-  };
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div
+    <section
       id="resume"
-      className="relative min-h-screen bg-black text-white py-16 md:py-32 flex justify-center items-center overflow-hidden"
+      ref={ref}
+      className="section"
+      style={{
+        background: "var(--bg-base)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
+        textAlign: "center",
+        minHeight: "50vh",
+      }}
     >
-      {/* Subtle grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1a1a1a_1px,transparent_1px),linear-gradient(to_bottom,#1a1a1a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="container mx-auto flex flex-col md:flex-row items-center relative z-10 px-6 gap-12">
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex-1 text-center md:text-left md:pr-16"
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+          style={{ maxWidth: "600px", margin: "0 auto" }}
         >
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neutral-200 to-neutral-400">
-            My Resume
-          </h1>
-
-          <p className="text-lg text-neutral-400 leading-relaxed mb-8 max-w-xl mx-auto md:mx-0">
-            Welcome! I&apos;m a passionate full-stack Developer skilled in the
-            MERN stack, and I enjoy crafting smooth, user-friendly experiences
-            on the web. Check out my resume below to see my journey and skills
-            in detail.
+          <span className="section-label">Résumé</span>
+          <h2
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              fontWeight: 800,
+              color: "var(--text-primary)",
+              letterSpacing: "-0.03em",
+              margin: "0.3em 0 0.7em",
+            }}
+          >
+            View My Resume
+          </h2>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "1rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.75,
+              marginBottom: "2rem",
+            }}
+          >
+            Full-stack developer with expertise in the MERN stack, building
+            scalable, user-centric web applications. Download my resume to
+            explore my complete professional journey.
           </p>
 
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <motion.button
-              onClick={handleViewResume}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative px-8 py-3 rounded-lg bg-neutral-900 text-white font-medium 
-                border border-neutral-800 hover:border-neutral-700 transition-all duration-300
-                flex items-center gap-2 w-full md:w-auto justify-center"
-            >
-              <FileText className="group-hover:animate-pulse" />
-              View Resume
-            </motion.button>
-          </div>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex-1 flex justify-center"
-        >
-          <div className="relative group">
-            <div className="absolute -inset-2 bg-gradient-to-r from-neutral-800 to-neutral-600 rounded-lg blur-xl opacity-50 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt" />
-            <div className="relative w-48 h-48 md:w-48 md:h-48 rounded-lg p-2">
-              <div className="bg-neutral-900 rounded-lg p-2 h-full backdrop-blur-sm border border-neutral-800 overflow-hidden group-hover:border-neutral-700 transition duration-300">
-                <motion.img
-                  whileHover={{ scale: 1.05, rotate: 2 }}
-                  src={resumelogo}
-                  alt="Resume Logo"
-                  className="w-full h-full rounded-lg object-cover shadow-2xl"
-                />
-              </div>
-            </div>
-            <div className="absolute bottom-4 right-4 text-neutral-400 text-xs font-medium bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md border border-neutral-800">
-              AI generated image
-            </div>
-          </div>
+          <motion.button
+            onClick={() => window.open(resumeCVData.resumeLink, "_blank")}
+            whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
+            data-magnetic
+            onMouseEnter={(e) => {
+              if (!prefersReducedMotion) {
+                e.currentTarget.style.background = "rgba(232,131,74,0.14)";
+                e.currentTarget.style.boxShadow = "0 0 30px rgba(232,131,74,0.2)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(232,131,74,0.08)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.6rem",
+              padding: "0.9rem 2.25rem",
+              background: "rgba(232,131,74,0.08)",
+              border: "1px solid rgba(232,131,74,0.35)",
+              borderRadius: "6px",
+              color: "var(--accent)",
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "0.95rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              letterSpacing: "0.04em",
+              transition: "all 0.25s ease",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            View Resume
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </motion.button>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
 
