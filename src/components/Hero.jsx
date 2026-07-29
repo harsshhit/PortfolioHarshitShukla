@@ -130,6 +130,18 @@ function MagneticLink({ href, children, className, secondary = false }) {
 const Hero = () => {
   const prefersReducedMotion = useReducedMotion();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [timeStr, setTimeStr] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const options = { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
+      setTimeStr(now.toLocaleTimeString("en-US", options) + " IST");
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const name = useTextScramble("Harshit", 600);
   const role = useTypewriter();
@@ -205,7 +217,7 @@ const Hero = () => {
           style={{ flex: "1 1 300px", minWidth: 0 }}
         >
           <motion.span variants={itemVariants} className="section-label">
-            Portfolio
+            Portfolio {timeStr && `• ${timeStr}`}
           </motion.span>
 
           <motion.h1

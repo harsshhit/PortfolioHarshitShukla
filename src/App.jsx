@@ -1,9 +1,14 @@
 import React, { lazy, Suspense, useEffect } from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import CustomCursor from "./components/CustomCursor";
+import CommandPalette from "./components/CommandPalette";
+import BootLoader from "./components/BootLoader";
+import NotFound from "./components/NotFound";
 import { HeaderProvider } from "./context/HeaderContext";
+import { useTabTitle } from "./hooks/useTabTitle";
+import { useEasterEgg } from "./hooks/useEasterEgg";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -92,6 +97,83 @@ const prefetchComponents = () => {
   }, 2500);
 };
 
+function MainPortfolio() {
+  useTabTitle();
+  const { konamiUnlocked, dismissKonami } = useEasterEgg();
+
+  return (
+    <>
+      <CustomCursor />
+      <CommandPalette />
+      <Header />
+      <main>
+        <Hero />
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Skills />
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Experience />
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Projects />
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Resume />
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Contact />
+          </Suspense>
+        </ErrorBoundary>
+      </main>
+
+      {/* Konami Code Unlocked Modal */}
+      {konamiUnlocked && (
+        <div
+          onClick={dismissKonami}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(8,8,8,0.9)',
+            backdropFilter: 'blur(16px)',
+            zIndex: 99999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '2rem',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="card-glass"
+            style={{ padding: '2.5rem', maxWidth: '440px', border: '1px solid #E8834A' }}
+          >
+            <span style={{ fontSize: '3rem', display: 'block', marginBottom: '0.5rem' }}>🎮</span>
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontSize: '1.6rem', color: '#F2F2F0', margin: '0 0 0.5rem' }}>
+              Cheat Code Unlocked!
+            </h3>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.9rem', color: '#8A8A85', marginBottom: '1.5rem' }}>
+              You entered the Konami Code. You've got great taste in web details. Let's build something epic together!
+            </p>
+            <button onClick={dismissKonami} className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+              Continue Exploring
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 function App() {
   useEffect(() => {
     let lenis;
@@ -123,36 +205,11 @@ function App() {
     <Router>
       <HeaderProvider>
         <div className="App w-full overflow-x-hidden" style={{ background: 'var(--bg-base)' }}>
-          <CustomCursor />
-          <Header />
-          <main>
-            <Hero />
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Skills />
-              </Suspense>
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Experience />
-              </Suspense>
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Projects />
-              </Suspense>
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Resume />
-              </Suspense>
-            </ErrorBoundary>
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Contact />
-              </Suspense>
-            </ErrorBoundary>
-          </main>
+          <BootLoader />
+          <Routes>
+            <Route path="/" element={<MainPortfolio />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </div>
       </HeaderProvider>
     </Router>
